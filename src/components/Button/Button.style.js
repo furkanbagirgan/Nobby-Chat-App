@@ -22,11 +22,11 @@ const basicStyles = StyleSheet.create({
 
 //Here the changing styles of the button are created.
 const styles = {
-  light: StyleSheet.create({
+  green: StyleSheet.create({
     ...basicStyles,
     container: {
       ...basicStyles.container,
-      backgroundColor: '#FFFC00',
+      backgroundColor: colors.primaryGreen,
     },
     title: {
       ...basicStyles.title,
