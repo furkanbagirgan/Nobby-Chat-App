@@ -8,15 +8,15 @@ import {
 
 import styles from './Button.style';
 
-function Button({title, onClick, loading}) {
+function Button({title, onClick, loading, theme}) {
   //Here the button component is displayed on the screen.
   return (
     <TouchableWithoutFeedback onPress={onClick}>
-      <View style={styles.container}>
+      <View style={styles[theme].container}>
         {loading ? (
-          <ActivityIndicator size={25} color="#000" />
+          <ActivityIndicator size={25} color="#555" />
         ) : (
-          <Text style={styles.title}>{title}</Text>
+          <Text style={styles[theme].title}>{title}</Text>
         )}
       </View>
     </TouchableWithoutFeedback>
