@@ -30,7 +30,7 @@ const styles = {
     },
     title: {
       ...basicStyles.title,
-      color: '#000',
+      color: colors.primaryText,
     },
   }),
   dark: StyleSheet.create({
@@ -41,7 +41,7 @@ const styles = {
     },
     title: {
       ...basicStyles.title,
-      color: '#FFF',
+      color: colors.secondaryText,
     },
   }),
   blue: StyleSheet.create({
@@ -52,7 +52,7 @@ const styles = {
     },
     title: {
       ...basicStyles.title,
-      color: '#000',
+      color: colors.primaryText,
     },
   })
 };
