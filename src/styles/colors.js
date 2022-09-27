@@ -8,6 +8,7 @@ export default {
   plainBlue: '#3EDBF0',
   primaryText: '#000',
   secondaryText: '#FFF',
+  plainText: '#B9C0C8',
   primaryBackground: '#FFF',
   secondaryBackground: '#222',
 };
