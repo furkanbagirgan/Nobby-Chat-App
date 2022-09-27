@@ -14,7 +14,7 @@ const messageSlice = createSlice({
     getMessages: (state, action) => {
       try {
         const data = [];
-        const chat = doc(db, 'chats', action.payload);
+        const chat = doc(db, 'message', action.payload);
         const unsubscribe = onSnapshot(chat, doc => {
           data=[...doc.data().messages];
         });

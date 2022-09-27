@@ -5,7 +5,7 @@ import {collection, getDocs} from 'firebase/firestore';
 export const getContacts = createAsyncThunk('contact/getContacts', async () => {
   try {
     let data = [];
-    const snapshot = await getDocs(collection(db, 'users'));
+    const snapshot = await getDocs(collection(db, 'contact'));
     snapshot.forEach(doc => {
       data.push({...doc.data(), docId: doc.id});
     });

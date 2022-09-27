@@ -15,7 +15,7 @@ const chatSlice = createSlice({
       try {
         const data = [];
         const q = query(
-          collection(db, 'chats'),
+          collection(db, 'message'),
           where('members', 'array-contains', action.payload),
         );
         const unsubscribe = onSnapshot(q, querySnapshot => {
