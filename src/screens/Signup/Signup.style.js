@@ -1,6 +1,9 @@
 import {StyleSheet} from 'react-native';
 
 import colors from '../../styles/colors';
+import sizes from '../../styles/fontSizes';
+import radius from '../../styles/radius';
+import spaces from '../../styles/spaces';
 
 //Here the basic styles of the Login screen are created.
 const basicStyles = StyleSheet.create({
@@ -9,26 +12,26 @@ const basicStyles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 5,
+    paddingHorizontal: spaces.padding.tiny,
   },
   wrapper: {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
-    borderRadius: 15,
+    padding: spaces.padding.big,
+    borderRadius: radius.mediumSoft,
   },
   header: {
-    fontSize: 45,
+    fontSize: sizes.big,
     fontWeight: 'bold',
   },
   formContainer: {
-    marginTop: 20,
-    marginBottom: 10,
+    marginTop: spaces.margin.huge,
+    marginBottom: spaces.margin.medium,
   },
   signupText: {
-    marginTop: 25,
-    marginBottom: 10,
+    marginTop: spaces.margin.xhuge,
+    marginBottom: spaces.margin.medium,
     fontWeight: 'bold',
     color: colors.secondaryText,
   },
