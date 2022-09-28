@@ -37,7 +37,7 @@ const styles = {
     ...basicStyles,
     container: {
       ...basicStyles.container,
-      backgroundColor: '#FFFC00',
+      backgroundColor: colors.plainBackground,
     },
     title: {
       ...basicStyles.title,
