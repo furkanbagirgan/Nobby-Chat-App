@@ -9,6 +9,7 @@ export default {
   primaryText: '#000',
   secondaryText: '#FFF',
   plainText: '#B9C0C8',
+  darkText: '#666',
   primaryBackground: '#FFF',
   secondaryBackground: '#222',
   plainBackground: '#000',
