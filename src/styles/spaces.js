@@ -6,6 +6,7 @@ export default {
     large: 12,
     big: 15,
     huge: 20,
+    xhuge: 25,
   },
   padding: {
     micro: 3,
