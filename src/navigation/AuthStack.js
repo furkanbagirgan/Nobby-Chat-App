@@ -27,12 +27,14 @@ const AuthStack = () => {
         component={Signup}
         options={{
           headerStyle: {
-            backgroundColor: theme === 'light' ? colors.primaryBackground : colors.secondaryBackground,
+            backgroundColor: colors.primaryBlue,
           },
-          headerTintColor: colors.plainText,
+          headerTintColor:
+            theme === 'light' ? colors.secondaryText : colors.primaryText,
           headerTitle: '',
           headerTitleAlign: 'center',
           headerShadowVisible: false,
+          animation: 'slide_from_right'
         }}
       />
     </Stack.Navigator>
