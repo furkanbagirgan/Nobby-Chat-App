@@ -4,7 +4,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useSelector} from 'react-redux';
 
 import Home from './../screens/Home';
-import Stories from './../screens/Stories';
 import Profile from './../screens/Profile';
 import colors from './../styles/colors';
 
@@ -25,8 +24,6 @@ const BottomTabs = () => {
           if (route.name === 'Home') {
             iconName = 'chatbubbles';
             iconSize = 28;
-          } else if (route.name === 'Stories') {
-            iconName = 'ios-duplicate';
           } else if (route.name === 'Profile') {
             iconName = 'person';
           }
@@ -38,8 +35,8 @@ const BottomTabs = () => {
             theme === 'light' ? colors.lightBackground : colors.darkBackground,
           position: 'absolute',
           bottom: 30,
-          marginHorizontal: 40,
-          height: 50,
+          marginHorizontal: 80,
+          height: 60,
           borderRadius: 25,
           borderTopWidth: 0,
         },
@@ -50,11 +47,6 @@ const BottomTabs = () => {
         tabBarShowLabel: false,
       })}>
       <Tab.Screen name="Home" component={Home} options={{headerShown: false}} />
-      <Tab.Screen
-        name="Stories"
-        component={Stories}
-        options={{headerShown: false}}
-      />
       <Tab.Screen
         name="Profile"
         component={Profile}
