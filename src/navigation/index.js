@@ -1,6 +1,8 @@
 import {NavigationContainer} from '@react-navigation/native';
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect,useState} from 'react';
+import { View } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
+import * as SplashScreen from 'expo-splash-screen';
 
 import AuthStack from './AuthStack';
 import ContentStack from './ContentStack';
@@ -12,26 +14,40 @@ const Navigation = () => {
   //setTheme and setCurrentUser function is accessed with the useDispatch hook.
   const userSession = useSelector(state => state.auth.currentUser);
   const dispatch = useDispatch();
-
-  //It makes the getUserData function run when the application is first launched.
-  useEffect(() => {
-    getUserData();
-  }, [getUserData]);
+  const [appIsReady, setAppIsReady] = useState(false);
 
   //Checking if there is any user data saved in the storage. If there is, this user and theme information is saved in redux.
-  const getUserData = useCallback(async () => {
-    const user = await getItem('@userData');
-    const theme = await getItem('@themeData');
-    if (user !== 0 || theme !== 0) {
-      await loginWithUser(user.email, user.password, dispatch);
+  useEffect(() => {
+    async function prepare() {
+      const userData = await getItem('@userData');
+      const themeData = await getItem('@themeData');
+      if (userData !== 0 || themeData !== 0) {
+        await loginWithUser(userData.email, userData.password, themeData, dispatch);
+      }
+      setAppIsReady(true);
     }
-  }, [dispatch]);
+    prepare();
+  }, []);
+
+  //If app Ready is true, the appropriate stack appears on the screen.
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  //If appIsReady is false, nothing will appear on the screen, so the splash screen will work.
+  if (!appIsReady) {
+    return null;
+  }
 
   //Here, the appropriate navigation structure is displayed on the screen according to the userSession status.
   return (
-    <NavigationContainer>
-      {userSession.email ? <ContentStack /> : <AuthStack />}
-    </NavigationContainer>
+    <View style={{flex: 1}} onLayout={onLayoutRootView}>
+      <NavigationContainer>
+        {userSession.email ? <ContentStack /> : <AuthStack />}
+      </NavigationContainer>
+    </View>
   );
 };
 
