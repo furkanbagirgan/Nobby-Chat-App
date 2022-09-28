@@ -13,5 +13,6 @@ export default {
   secondaryBackground: '#222',
   plainBackground: '#000',
   lightBackground: '#F4F7F2',
+  darkBackground: '#000',
   primaryGradientColors: ['#77ACF1','#65C18C']
 };
