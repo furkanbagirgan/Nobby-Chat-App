@@ -14,6 +14,7 @@ import {setItem, updateItem, removeItem} from './asyncStorage';
 import {errorMessage, successfulMessage} from './toastMessages';
 import {setCurrentUser, resetUser} from '../redux/authSlice';
 import {setTheme} from '../redux/themeSlice';
+import {getChats} from '../redux/chatSlice';
 
 //Retrieves user information from Firestore.
 export const getUser = async () => {
@@ -23,8 +24,8 @@ export const getUser = async () => {
 };
 
 //Login to firebase with incoming email and password. It then saves this information to storage and redux.
-//In case of an error, it displays the toast message on the screen.
-export const loginWithUser = async (email, password, dispatch) => {
+//Then get chats from firestore and save redux. In case of an error, it displays the toast message on the screen.
+export const loginWithUser = async (email, password, theme, dispatch) => {
   try {
     const {user} = await signInWithEmailAndPassword(auth, email, password);
     const userData = {
@@ -34,9 +35,10 @@ export const loginWithUser = async (email, password, dispatch) => {
       photoURL: user.photoURL,
     };
     await setItem('@userData', userData);
-    await setItem('@themeData', 'light');
+    await setItem('@themeData', theme);
     dispatch(setCurrentUser(userData));
-    dispatch(setTheme('light'));
+    dispatch(setTheme(theme));
+    dispatch(getChats(user.uid));
   } catch (error) {
     switch (error.code) {
       case 'auth/user-not-found':
@@ -55,7 +57,7 @@ export const loginWithUser = async (email, password, dispatch) => {
 };
 
 //Creates a new user in firebase with the incoming user data. It then saves this information to storage and redux.
-//In case of an error, it displays the toast message on the screen.
+//Then get chats from firestore and save redux. In case of an error, it displays the toast message on the screen.
 export const createUser = async (
   email,
   password,
@@ -70,12 +72,11 @@ export const createUser = async (
       password,
     );
     await updateProfile(newUser, {displayName, photoURL});
-    await setDoc(doc(db, 'users', newUser.uid), {
+    await setDoc(doc(db, 'contact', newUser.uid), {
       id: newUser.uid,
       email: email,
       displayName,
       photoURL,
-      location: '',
       storyURL: '',
     });
     const newUserData = {
@@ -88,6 +89,7 @@ export const createUser = async (
     await setItem('@themeData', 'light');
     dispatch(setCurrentUser(newUserData));
     dispatch(setTheme('light'));
+    dispatch(getChats(newUser.uid));
   } catch (error) {
     switch (error.code) {
       case 'auth/email-already-in-use':
@@ -100,7 +102,7 @@ export const createUser = async (
 };
 
 //Remove user and theme data from storage and reset user data in redux. Then sign out of firebase
-export const signOut = async dispatch => {
+export const logOut = async dispatch => {
   await removeItem('@userData');
   await removeItem('@themeData');
   dispatch(resetUser());
