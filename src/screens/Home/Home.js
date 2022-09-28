@@ -1,20 +1,85 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import {View, Text, Image, SafeAreaView} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import Icon from '@expo/vector-icons/Ionicons';
+import {LinearGradient} from 'expo-linear-gradient';
 
 import styles from './Home.style';
-import { logOut } from '../../utilities/firebaseActions';
+import colors from '../../styles/colors';
 
 const Home = ({navigation}) => {
   //Necessary states are created.
-  const theme = useSelector(state => state.theme.theme);
+  const currentUser = useSelector(state => state.auth.currentUser);
+  const themea = useSelector(state => state.theme.theme);
+  const theme='light'
   const dispatch = useDispatch();
+  const [dayMessage, setDayMessage] = useState('');
 
+  //Runs the adjustDayMessage function when the screen is first turned on.
+  useEffect(() => {
+    adjustDayMessage();
+  }, []);
+
+  //The appropriate message is set according to the current time.
+  const adjustDayMessage = () => {
+    const today = new Date();
+    const hour = today.getHours();
+    switch (true) {
+      case 6 <= hour && hour < 12:
+        setDayMessage('Good Morning');
+        break;
+      case 12 <= hour && hour < 18:
+        setDayMessage('Good Afternoon');
+        break;
+      case 18 <= hour && hour < 23:
+        setDayMessage('Good Evening');
+        break;
+      default:
+        setDayMessage('Good Night');
+        break;
+    }
+  };
+
+  //
   return (
-    <View style={styles[theme].container}>
-      <Text onPress={()=>logOut(dispatch)} style={{color:'black'}}>Home</Text>
-    </View>
-  )
-}
+    <LinearGradient
+      colors={colors.primaryGradientColors}
+      start={{x: 0.0, y: 0.5}}
+      end={{x: 1.0, y: 0.5}}
+      style={styles[theme].container}>
+      {/* Prints information such as user picture and name on the screen */}
+      <View style={styles[theme].headerContainer}>
+        <View style={styles[theme].userContainer}>
+          <View style={styles[theme].imageWrapper}>
+            {currentUser.photoURL !== null ? (
+              <Image
+                source={{uri: currentUser.photoURL}}
+                style={styles[theme].image}
+              />
+            ) : (
+              <Icon name="person" color={colors.plainText} size={25} />
+            )}
+          </View>
+          <View style={styles[theme].headerTextWrapper}>
+            <Text style={styles[theme].headerText}>{dayMessage}</Text>
+            <Text style={styles[theme].displayName}>
+              {currentUser.displayName}
+            </Text>
+          </View>
+        </View>
+        <View style={styles[theme].newMessageWrapper}>
+          <View style={styles[theme].iconWrapper}>
+            <Icon name="add" color={colors.plainText} size={25} />
+          </View>
+          <Text style={styles[theme].headerText}>Message</Text>
+        </View>
+      </View>
+      {/* prints stories to the screen. */}
+      <View style={styles[theme].storiesContainer}></View>
+      {/* prints chats to the screen. */}
+      <View style={styles[theme].chatContainer}></View>
+    </LinearGradient>
+  );
+};
 
-export default Home
+export default Home;
