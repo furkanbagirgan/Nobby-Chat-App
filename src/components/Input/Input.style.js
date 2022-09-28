@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
 import spaces from '../../styles/spaces';
 import radius from '../../styles/radius';
+import colors from '../../styles/colors';
 
 //Here the basic styles of the input are created.
 const basicStyles = StyleSheet.create({
@@ -17,7 +18,6 @@ const basicStyles = StyleSheet.create({
   input: {
     marginLeft: spaces.margin.tiny,
     flex: 1,
-    color: '#333',
   },
 });
 
@@ -27,15 +27,23 @@ const styles = {
     ...basicStyles,
     container: {
       ...basicStyles.container,
-      backgroundColor: '#F4F7F2',
+      backgroundColor: colors.lightBackground,
     },
+    input: {
+      ...basicStyles.input,
+      color: colors.plainText,
+    }
   }),
   dark: StyleSheet.create({
     ...basicStyles,
     container: {
       ...basicStyles.container,
-      backgroundColor: '#555',
+      backgroundColor: colors.plainBackground,
     },
+    input: {
+      ...basicStyles.input,
+      color: colors.plainText,
+    }
   }),
 };
 

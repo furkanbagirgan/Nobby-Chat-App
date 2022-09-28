@@ -1,8 +1,9 @@
-import Icon from '@expo/vector-icons/Ionicons';
 import React from 'react';
 import {View, TextInput} from 'react-native';
+import Icon from '@expo/vector-icons/Ionicons';
 
 import styles from './Input.style';
+import colors from '../../styles/colors';
 
 function Input(props) {
   //Here the input component is displayed on the screen.
@@ -11,11 +12,11 @@ function Input(props) {
       <Icon
         name={props.iconName}
         size={20}
-        color='#333'
+        color={colors.plainText}
       />
       <TextInput
         {...props}
-        placeholderTextColor='#333'
+        placeholderTextColor={colors.plainText}
         style={styles[props.theme].input}
       />
     </View>
