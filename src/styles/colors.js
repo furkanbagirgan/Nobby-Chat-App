@@ -11,4 +11,7 @@ export default {
   plainText: '#B9C0C8',
   primaryBackground: '#FFF',
   secondaryBackground: '#222',
+  plainBackground: '#000',
+  lightBackground: '#F4F7F2',
+  primaryGradientColors: ['#77ACF1','#65C18C']
 };
