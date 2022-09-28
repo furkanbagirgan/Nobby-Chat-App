@@ -1,36 +1,56 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {query, doc, where, onSnapshot} from 'firebase/firestore';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import {getDoc, doc} from 'firebase/firestore';
 
-//This is the slice where contact operations are made.
+//The new incoming data is assigned to the existing messages.
+export const getMessages = createAsyncThunk(
+  'message/getMessages',
+  async docId => {
+    try {
+      const data = [];
+      const docRef = doc(db, 'message', docId);
+      const chat = await getDoc(docRef);
+      data = [...chat.data().messages];
+      return data;
+    } catch {
+      return [];
+    }
+  },
+);
+
+//This is the slice where message operations are made.
 const messageSlice = createSlice({
   name: 'message',
   initialState: {
     messages: [],
-    cancelSnapshot: () => {},
     loading: false,
     error: false,
   },
-  reducers: {
-    getMessages: (state, action) => {
-      try {
-        const data = [];
-        const chat = doc(db, 'message', action.payload);
-        const unsubscribe = onSnapshot(chat, doc => {
-          data=[...doc.data().messages];
-        });
+  extraReducers: builder => {
+    builder
+      .addCase(getMessages.pending, (state, action) => {
+        //The reducer that will be generated while the getMessages function is running.
         return {
-          cancelSnapshot: unsubscribe,
-          messages: data,
+          loading: true,
+          error: false,
         };
-      } catch {
+      })
+      .addCase(getMessages.fulfilled, (state, action) => {
+        //The reducer that will occur when the getMessages function is positive.
         return {
-          cancelSnapshot: () => {},
-          messages: [],
+          messages: action.payload,
+          loading: false,
+          error: false,
         };
-      }
-    },
+      })
+      .addCase(getMessages.rejected, (state, action) => {
+        //The reducer that will occur when the getMessages function has failed.
+        return {
+          messages: action.payload,
+          loading: false,
+          error: true,
+        };
+      });
   },
 });
 
-export const {getMessages} = messageSlice.actions;
 export default messageSlice.reducer;
