@@ -34,8 +34,7 @@
         "image": "./assets/splash.png",
         "resizeMode": "contain",
         "backgroundColor": "#ffffff"
-      },
-      "permissions": ["READ_EXTERNAL_STORAGE","WRITE_EXTERNAL_STORAGE","INTERNET"]
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
