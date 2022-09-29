@@ -14,7 +14,6 @@ import {setItem, updateItem, removeItem} from './asyncStorage';
 import {errorMessage, successfulMessage} from './toastMessages';
 import {setCurrentUser, resetUser} from '../redux/authSlice';
 import {setTheme} from '../redux/themeSlice';
-import {getChats} from '../redux/chatSlice';
 
 //Retrieves user information from Firestore.
 export const getUser = async () => {
@@ -24,12 +23,13 @@ export const getUser = async () => {
 };
 
 //Login to firebase with incoming email and password. It then saves this information to storage and redux.
-//Then get chats from firestore and save redux. In case of an error, it displays the toast message on the screen.
+//In case of an error, it displays the toast message on the screen.
 export const loginWithUser = async (email, password, theme, dispatch) => {
   try {
     const {user} = await signInWithEmailAndPassword(auth, email, password);
     //Update async storage with new values
     const userData = {
+      id: user.uid,
       email: email,
       password: password,
       displayName: user.displayName,
@@ -40,7 +40,6 @@ export const loginWithUser = async (email, password, theme, dispatch) => {
     //Update redux with new values
     dispatch(setCurrentUser(userData));
     dispatch(setTheme(theme));
-    dispatch(getChats(user.uid));
   } catch (error) {
     switch (error.code) {
       case 'auth/user-not-found':
@@ -59,7 +58,7 @@ export const loginWithUser = async (email, password, theme, dispatch) => {
 };
 
 //Creates a new user in firebase with the incoming user data. It then saves this information to storage and redux.
-//Then get chats from firestore and save redux. In case of an error, it displays the toast message on the screen.
+//In case of an error, it displays the toast message on the screen.
 export const createUser = async (
   email,
   password,
@@ -81,9 +80,11 @@ export const createUser = async (
       displayName,
       photoURL,
       storyURL: '',
+      storyDate: '',
     });
     //Update async storage with new values
     const newUserData = {
+      id: newUser.uid,
       email: email,
       password: password,
       displayName: displayName,
@@ -91,10 +92,9 @@ export const createUser = async (
     };
     await setItem('@userData', newUserData);
     await setItem('@themeData', 'light');
-    //Update redux with new values and get user chats
+    //Update redux with new values
     dispatch(setCurrentUser(newUserData));
     dispatch(setTheme('light'));
-    dispatch(getChats(newUser.uid));
   } catch (error) {
     switch (error.code) {
       case 'auth/email-already-in-use':
@@ -122,7 +122,7 @@ export const editProfile = async (
   dispatch,
 ) => {
   try {
-    //
+    //Update if email and password changed.
     if (userSession.email !== data.email) {
       await updateEmail(auth.currentUser, data.email);
     }
@@ -148,7 +148,7 @@ export const editProfile = async (
       }
     }
     //Update firestore with new values
-    await updateDoc(doc(db, 'users', auth.currentUser.uid), {
+    await updateDoc(doc(db, 'contact', auth.currentUser.uid), {
       email: data.email,
       displayName: data.displayName,
       profileURL: image,
@@ -170,7 +170,7 @@ export const editProfile = async (
 };
 
 //The picture that selected from the gallery or camera is turned into a blob and saved to firebase storage.
-export const uploadPhoto = async (profileImage, name) => {
+export const uploadPhoto = async (image, name) => {
   try {
     const blob = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
@@ -182,7 +182,7 @@ export const uploadPhoto = async (profileImage, name) => {
         reject(new TypeError('Network request failed'));
       };
       xhr.responseType = 'blob';
-      xhr.open('GET', profileImage, true);
+      xhr.open('GET', image, true);
       xhr.send(null);
     });
 
