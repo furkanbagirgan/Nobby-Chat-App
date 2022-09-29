@@ -5,6 +5,7 @@ import {useSelector} from 'react-redux';
 
 import BottomTabs from './BottomTabs';
 import Chat from '../screens/Chat';
+import StoryDetail from '../screens/StoryDetail';
 import colors from '../styles/colors';
 
 const Stack = createNativeStackNavigator();
@@ -44,6 +45,24 @@ const ContentStack = () => {
               style={styles.image}
             />
           ),
+        })}
+      />
+      <Stack.Screen
+        name="StoryDetail"
+        component={StoryDetail}
+        options={({route}) => ({
+          presentation: 'modal',
+          headerStyle: {
+            backgroundColor:
+              theme === 'light'
+                ? colors.lightBackground
+                : colors.darkBackground,
+          },
+          headerTintColor:
+            theme === 'light' ? colors.secondaryText : colors.secondaryText,
+          headerTitleAlign: 'center',
+          headerTitle: route.params.displayName,
+          headerShadowVisible: false,
         })}
       />
     </Stack.Navigator>
