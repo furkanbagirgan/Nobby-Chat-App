@@ -2,6 +2,7 @@ import Toast from 'react-native-root-toast';
 
 import colors from '../styles/colors';
 
+//Displays an error message on the screen.
 export const errorMessage = message => {
   Toast.show(message, {
     duration: Toast.durations.LONG,
@@ -14,6 +15,7 @@ export const errorMessage = message => {
   });
 };
 
+//Displays an success message on the screen
 export const successMessage = message => {
   Toast.show(message, {
     duration: Toast.durations.LONG,
