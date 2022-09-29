@@ -15,20 +15,44 @@ const basicStyles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: spaces.padding.medium,
+    alignItems: 'flex-start',
+    paddingHorizontal: spaces.padding.large,
     marginTop: spaces.margin.medium,
     marginBottom: spaces.margin.huge,
     backgroundColor: 'transparent'
   },
-  userContainer: {
+  leftContainer: {
+    justifyContent: 'center',
+    alignItems: 'flex-start'
+  },
+  displayName:{
+    fontSize: sizes.xlarge,
+    fontWeight: 'bold',
+    color: colors.primaryText,
+    flexShrink: 1,
+  },
+  rightContainer: {
     flexDirection: 'row',
+  },
+  newMessageWrapper: {
+    justifyContent: 'center',
     alignItems: 'center',
   },
+  iconWrapper: {
+    width: 40,
+    height: 40,
+    borderRadius: radius.largeSoft,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  userWrapper:{
+    alignItems: 'center',
+    marginLeft: spaces.margin.medium,
+  },
   imageWrapper:{
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 40,
+    height: 40,
+    borderRadius: radius.largeSoft,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -37,37 +61,16 @@ const basicStyles = StyleSheet.create({
     height: '100%',
     borderRadius: radius.hugeSoft,
   },
-  headerTextWrapper: {
-    marginLeft: spaces.margin.medium,
-    justifyContent: 'center',
-    alignItems: 'flex-start'
-  },
-  headerText: {},
-  displayName:{
-    fontSize: sizes.xlarge,
-    fontWeight: 'bold',
-    color: colors.primaryText,
-  },
-  newMessageWrapper: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  iconWrapper: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
   storiesContainer:{
     width: '100%',
-    height: 100,
-    paddingHorizontal: spaces.padding.medium,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    marginBottom: spaces.margin.huge
   },
   chatContainer: {
     flex: 1,
     paddingHorizontal: spaces.padding.medium,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25
   }
 });
 
@@ -88,8 +91,7 @@ const styles = {
       backgroundColor: colors.primaryBackground,
     },
     headerText:{
-      ...basicStyles.headerText,
-      color: colors.secondaryText
+      color: colors.secondaryText,
     },
     chatContainer: {
       ...basicStyles.chatContainer,
@@ -111,8 +113,7 @@ const styles = {
       backgroundColor: colors.secondaryBackground,
     },
     headerText:{
-      ...basicStyles.headerText,
-      color: colors.darkText
+      color: colors.darkText,
     },
     chatContainer: {
       ...basicStyles.chatContainer,
