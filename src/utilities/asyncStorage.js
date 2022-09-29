@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Alert} from 'react-native';
+import {errorMessage} from './toastMessages';
 
 //Writes data to storage
 export const setItem = async (key, value) => {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value));
   } catch {
-    Alert.alert('Storage Error', 'Could not write to storage!');
+    errorMessage('Could not write to storage!');
   }
 };
 
@@ -20,7 +20,7 @@ export const getItem = async key => {
       return 0;
     }
   } catch {
-    Alert.alert('Storage Error', 'Storage could not be read!');
+    errorMessage('Storage could not be read!');
     return 0;
   }
 };
@@ -30,7 +30,7 @@ export const updateItem = async (key, value) => {
   try {
     await AsyncStorage.mergeItem(key, JSON.stringify(value));
   } catch {
-    Alert.alert('Storage Error', 'Could not update storage!');
+    errorMessage('Could not update storage!');
   }
 };
 
@@ -39,6 +39,6 @@ export const removeItem = async key => {
   try {
     await AsyncStorage.removeItem(key);
   } catch {
-    Alert.alert('Storage Error', 'Could not delete from storage!');
+    errorMessage('Could not delete from storage!');
   }
 };
