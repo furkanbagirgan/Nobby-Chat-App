@@ -2,6 +2,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
+import Icon from '@expo/vector-icons/Ionicons';
 
 import BottomTabs from './BottomTabs';
 import Chat from '../screens/Chat';
@@ -34,7 +35,7 @@ const ContentStack = () => {
                 : colors.darkBackground,
           },
           headerTintColor:
-            theme === 'light' ? colors.secondaryText : colors.secondaryText,
+            theme === 'light' ? colors.primaryText : colors.secondaryText,
           headerTitleAlign: 'center',
           headerTitle: route.params.chatName,
           headerShadowVisible: false,
@@ -50,19 +51,17 @@ const ContentStack = () => {
       <Stack.Screen
         name="StoryDetail"
         component={StoryDetail}
-        options={({route}) => ({
-          presentation: 'modal',
+        options={({route, navigation}) => ({
           headerStyle: {
-            backgroundColor:
-              theme === 'light'
-                ? colors.lightBackground
-                : colors.darkBackground,
+            backgroundColor: colors.darkBackground,
           },
-          headerTintColor:
-            theme === 'light' ? colors.secondaryText : colors.secondaryText,
+          headerTintColor: colors.secondaryText,
           headerTitleAlign: 'center',
           headerTitle: route.params.displayName,
           headerShadowVisible: false,
+          headerLeft: () => {
+            return <Icon name="close" size={28} color="#FFF" onPress={()=>navigation.goBack()}/>;
+          },
         })}
       />
     </Stack.Navigator>
