@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 
 import colors from '../../styles/colors';
 
-//Here the basic styles of the Chat screen are created.
+//Here the basic styles of the Message screen are created.
 const basicStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -13,7 +13,7 @@ const basicStyles = StyleSheet.create({
   },
 });
 
-//Here the changing styles of the Chat screen are created.
+//Here the changing styles of the Message screen are created.
 const styles = {
   light: StyleSheet.create({
     ...basicStyles,
