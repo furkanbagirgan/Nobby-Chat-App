@@ -34,6 +34,9 @@ const basicStyles = StyleSheet.create({
   rightContainer: {
     flexDirection: 'row',
   },
+  headerText:{
+    fontSize: sizes.tiny
+  },
   newMessageWrapper: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -90,7 +93,11 @@ const styles = {
       ...basicStyles.iconWrapper,
       backgroundColor: colors.primaryBackground,
     },
+    headerMessage:{
+      color: colors.secondaryText,
+    },
     headerText:{
+      ...basicStyles.headerText,
       color: colors.secondaryText,
     },
     chatContainer: {
@@ -112,7 +119,11 @@ const styles = {
       ...basicStyles.iconWrapper,
       backgroundColor: colors.secondaryBackground,
     },
+    headerMessage:{
+      color: colors.darkText,
+    },
     headerText:{
+      ...basicStyles.headerText,
       color: colors.darkText,
     },
     chatContainer: {

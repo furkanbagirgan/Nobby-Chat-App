@@ -45,8 +45,8 @@ const Home = ({navigation}) => {
   };
 
   //Here is the function that allows switching to the story detail screen when each storyCard component is clicked.
-  const goToStoryDetail = (displayName, storyURL) => {
-    navigation.navigate('StoryDetail', {displayName, storyURL});
+  const goToStoryDetail = (displayName, storyURL, removeStory) => {
+    navigation.navigate('StoryDetail', {displayName, storyURL, removeStory});
   };
 
   //Displays the picture selected by the user to add a new story with a modal.
@@ -70,7 +70,7 @@ const Home = ({navigation}) => {
       {/* Prints information such as user picture and name on the screen */}
       <View style={styles[theme].headerContainer}>
         <View style={styles[theme].headerTextWrapper}>
-          <Text style={styles[theme].headerText}>{dayMessage}</Text>
+          <Text style={styles[theme].headerMessage}>{dayMessage}</Text>
           <Text style={styles[theme].displayName}>
             {currentUser.displayName}
           </Text>
