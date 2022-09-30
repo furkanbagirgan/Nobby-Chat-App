@@ -12,7 +12,7 @@ import {loginWithUser} from '../utilities/firebaseActions';
 const Navigation = () => {
   //The currentUser information is accessed with the useSelector hook.
   //setTheme and setCurrentUser function is accessed with the useDispatch hook.
-  const userSession = useSelector(state => state.auth.currentUser);
+  const currentUser = useSelector(state => state.auth.currentUser);
   const dispatch = useDispatch();
   const [appIsReady, setAppIsReady] = useState(false);
 
@@ -45,7 +45,7 @@ const Navigation = () => {
   return (
     <View style={{flex: 1}} onLayout={onLayoutRootView}>
       <NavigationContainer>
-        {userSession.email ? <ContentStack /> : <AuthStack />}
+        {currentUser.email ? <ContentStack /> : <AuthStack />}
       </NavigationContainer>
     </View>
   );
