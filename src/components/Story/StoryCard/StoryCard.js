@@ -5,22 +5,32 @@ import Icon from '@expo/vector-icons/Ionicons';
 
 import styles from './StoryCard.style';
 import colors from '../../../styles/colors';
-import {auth} from './../../../utilities/firebase';
 
 const StoryCard = ({user, handlePress}) => {
   //Necessary states are created.
   const currentUser = useSelector(state => state.auth.currentUser);
+  const userStory=useSelector(state=>state.auth.userStory);
   const theme = useSelector(state => state.theme.theme);
 
   //Elements that will appear on the screen are defined here
   return (
     <TouchableWithoutFeedback onPress={handlePress}>
       <View style={styles[theme].container}>
-        <View style={styles[theme].imageWrapper}>
+        <View
+          style={[
+            styles[theme].imageWrapper,
+            user.id !== currentUser.id ? {}
+            : !userStory ? {borderWidth: 0} : {},
+          ]}>
           {user.photoURL !== null && user.photoURL !== '' ? (
             <Image source={{uri: user.photoURL}} style={styles[theme].image} />
           ) : (
             <Icon name="person" size={28} color={colors.plainText} />
+          )}
+          {(user.id === currentUser.id && !userStory) && (
+            <View style={styles[theme].addWrapper}>
+              <Icon name="add" size={18} color={colors.primaryBackground} />
+            </View>
           )}
         </View>
         <Text
