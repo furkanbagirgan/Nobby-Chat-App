@@ -30,7 +30,8 @@ const Stories = ({newStory, storyDetail}) => {
         },
       ];
       //Calculates one day ahead by providing the current date.
-      const todaysDate=new Date().getDate()-1;
+      const todaysDate=new Date();
+      todaysDate.setDate(new Date().getDate()-1);
       snapshot.forEach(doc => {
         //It is checked whether the thrown story is within 1 day.
         let date=new Date(doc.data().storyDate);
@@ -78,7 +79,6 @@ const Stories = ({newStory, storyDetail}) => {
               const result = await ImagePicker.launchCameraAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                 allowsEditing: true,
-                aspect: [1, 1],
                 quality: 0.5,
               });
               if (!result.cancelled) {
@@ -92,7 +92,6 @@ const Stories = ({newStory, storyDetail}) => {
               const result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.All,
                 allowsEditing: true,
-                aspect: [1, 1],
                 quality: 0.5,
               });
               if (!result.cancelled) {
