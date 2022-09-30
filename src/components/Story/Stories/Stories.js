@@ -117,6 +117,7 @@ const Stories = ({newStory, storyDetail}) => {
       overScrollMode="never"
       bounces={false}
       horizontal={true}
+      showsHorizontalScrollIndicator={false}
     />
   );
 };
