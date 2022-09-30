@@ -107,7 +107,6 @@ const Home = ({navigation}) => {
         visible={showStoryModal}
         close={storyModalToggle}
         storyUrl={story}
-        theme={theme}
       />
     </LinearGradient>
   );
