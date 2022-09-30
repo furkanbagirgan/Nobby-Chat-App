@@ -197,8 +197,24 @@ export const uploadPhoto = async (image, name) => {
   }
 };
 
-//Delete photo with name that coming with props
-export const deletePhoto = async name => {
-  const fileRef = ref(storage, auth.currentUser.uid + '-' + name);
+//Delete photo from firestore and storage
+export const deletePhoto = async (url) => {
+  //Update auth profile and firestore with new values
+  await updateProfile(auth.currentUser, {displayName:auth.currentUser.displayName, photoURL:''});
+  await updateDoc(doc(db, 'contact', auth.currentUser.uid), {
+    photoURL: '',
+  });
+  const fileRef = ref(storage, url);
+  await deleteObject(fileRef);
+};
+
+//Delete story from firestore and storage
+export const deleteStory = async (url) => {
+  //Update firestore with new values
+  await updateDoc(doc(db, 'contact', auth.currentUser.uid), {
+    storyDate: '',
+    storyURL: '',
+  });
+  const fileRef = ref(storage, url);
   await deleteObject(fileRef);
 };
