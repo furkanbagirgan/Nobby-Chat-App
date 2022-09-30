@@ -1,11 +1,11 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet,Image} from 'react-native';
 import {useSelector} from 'react-redux';
 import Icon from '@expo/vector-icons/Ionicons';
 
 import BottomTabs from './BottomTabs';
-import Chat from '../screens/Chat';
+import Message from '../screens/Message';
 import StoryDetail from '../screens/StoryDetail';
 import colors from '../styles/colors';
 
@@ -25,8 +25,8 @@ const ContentStack = () => {
       />
       {/*On the right side of the chat screen, there is a picture of the person to message.*/}
       <Stack.Screen
-        name="Chat"
-        component={Chat}
+        name="Message"
+        component={Message}
         options={({route}) => ({
           headerStyle: {
             backgroundColor:
@@ -36,13 +36,12 @@ const ContentStack = () => {
           },
           headerTintColor:
             theme === 'light' ? colors.primaryText : colors.secondaryText,
-          headerTitleAlign: 'center',
-          headerTitle: route.params.chatName,
+          headerTitle: route.params.displayName,
           headerShadowVisible: false,
           headerBackVisible: true,
-          headerRight: () => (
+          headerLeft: () => (
             <Image
-              source={{uri: route.params.receiverPhoto}}
+              source={{uri: route.params.photoURL}}
               style={styles.image}
             />
           ),
@@ -71,9 +70,10 @@ const ContentStack = () => {
 //Here is the required style for the image to be displayed in the header of the chat screen.
 const styles = StyleSheet.create({
   image: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    marginRight: 10
   },
 });
 
