@@ -1,12 +1,13 @@
 import {View, Text, Image} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import Icon from '@expo/vector-icons/Ionicons';
 import {LinearGradient} from 'expo-linear-gradient';
 
 import styles from './Home.style';
 import colors from '../../styles/colors';
 import StoryModal from './../../components/Story/StoryModal';
+import ContactModal from './../../components/Contact/ContactModal';
 import Stories from './../../components/Story/Stories';
 
 const Home = ({navigation}) => {
@@ -14,10 +15,10 @@ const Home = ({navigation}) => {
   const currentUser = useSelector(state => state.auth.currentUser);
   const themea = useSelector(state => state.theme.theme);
   const theme = 'light';
-  const dispatch = useDispatch();
   const [dayMessage, setDayMessage] = useState('');
   const [story, setStory] = useState('');
   const [showStoryModal, setShowStoryModal] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
 
   //Runs the adjustDayMessage function when the screen is first turned on.
   useEffect(() => {
@@ -44,6 +45,11 @@ const Home = ({navigation}) => {
     }
   };
 
+  //Here is the function that allows switching to the message screen when each contactCard or chatCard component is clicked.
+  const goToChat = (displayName, photoURL) => {
+    navigation.navigate('Message', {displayName, photoURL});
+  };
+
   //Here is the function that allows switching to the story detail screen when each storyCard component is clicked.
   const goToStoryDetail = (displayName, storyURL, removeStory) => {
     navigation.navigate('StoryDetail', {displayName, storyURL, removeStory});
@@ -53,6 +59,11 @@ const Home = ({navigation}) => {
   const addNewStory = storyURL => {
     setStory(storyURL);
     storyModalToggle();
+  };
+
+  //Allows the contact modal to close if it is open, and to open if it is closed.
+  const contactModalToggle = () => {
+    setShowContactModal(!showContactModal);
   };
 
   //Allows the story modal to close if it is open, and to open if it is closed.
@@ -78,7 +89,12 @@ const Home = ({navigation}) => {
         <View style={styles[theme].rightContainer}>
           <View style={styles[theme].newMessageWrapper}>
             <View style={styles[theme].iconWrapper}>
-              <Icon name="add" color={colors.plainText} size={25} />
+              <Icon
+                name="add"
+                color={colors.plainText}
+                size={25}
+                onPress={contactModalToggle}
+              />
             </View>
             <Text style={styles[theme].headerText}>Message</Text>
           </View>
@@ -103,10 +119,16 @@ const Home = ({navigation}) => {
       </View>
       {/* prints chats to the screen. */}
       <View style={styles[theme].chatContainer}></View>
+      {/* prints story and contact modals to the screen. */}
       <StoryModal
         visible={showStoryModal}
         close={storyModalToggle}
         storyUrl={story}
+      />
+      <ContactModal
+        visible={showContactModal}
+        close={contactModalToggle}
+        contactPress={goToChat}
       />
     </LinearGradient>
   );
