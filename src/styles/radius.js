@@ -4,5 +4,6 @@ export default {
   mediumSoft: 15,
   largeSoft: 20,
   hugeSoft: 22,
+  bigSoft: 27,
   curved: 40,
 };
