@@ -1,16 +1,18 @@
 import React, {useState} from 'react';
 import {View, Image} from 'react-native';
 import Modal from 'react-native-modal';
-import {setDoc, doc} from 'firebase/firestore';
+import {updateDoc, doc} from 'firebase/firestore';
+import { useSelector } from 'react-redux';
 
 import styles from './StoryModal.style';
 import Button from './../../Button';
 import {uploadPhoto} from '../../../utilities/firebaseActions';
 import {successMessage} from '../../../utilities/toastMessages';
-import {auth,db} from '../../../utilities/firebase';
+import {auth, db} from '../../../utilities/firebase';
 
-function StoryModal({visible, close, storyUrl, theme}) {
+function StoryModal({visible, close, storyUrl}) {
   //Necessary states are created.
+  const theme = useSelector(state=>state.theme.theme);
   const [loading, setLoading] = useState(false);
 
   //Update firestore with new story
@@ -19,11 +21,9 @@ function StoryModal({visible, close, storyUrl, theme}) {
     const url = await uploadPhoto(storyUrl, 'storyImage');
     if (url !== '') {
       const now = new Date().toISOString();
-      await setDoc(doc(db, 'story', auth.currentUser.uid), {
-        userId: auth.currentUser.uid,
-        displayName: auth.currentUser.displayName,
+      await updateDoc(doc(db, 'contact', auth.currentUser.uid), {
         storyURL: url,
-        dateTime: now,
+        storyDate: now,
       });
       successMessage('Story successfully shared');
       close();
