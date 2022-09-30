@@ -2,14 +2,23 @@ import {StyleSheet} from 'react-native';
 
 import colors from '../../styles/colors';
 import sizes from '../../styles/fontSizes';
+import radius from '../../styles/radius';
 
 //Here the basic styles of the StoryDetail screen are created.
 const basicStyles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.darkBackground,
+  },
+  loadingWrapper: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.darkBackground,
   },
   errorWrapper: {
-    flex: 9,
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -21,6 +30,17 @@ const basicStyles = StyleSheet.create({
   image: {
     flex: 1,
   },
+  deleteWrapper: {
+    position: 'absolute',
+    top: 20,
+    right: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 44,
+    height: 44,
+    borderRadius: radius.hugeSoft,
+    backgroundColor: colors.primaryPink,
+  }
 });
 
 //Here the changing styles of the StoryDetail screen are created.
@@ -29,14 +49,12 @@ const styles = {
     ...basicStyles,
     container: {
       ...basicStyles.container,
-      backgroundColor: colors.primaryBackground,
     },
   }),
   dark: StyleSheet.create({
     ...basicStyles,
     container: {
       ...basicStyles.container,
-      backgroundColor: colors.secondaryBackground,
     },
   }),
 };
