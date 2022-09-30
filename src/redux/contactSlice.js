@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {collection, getDocs} from 'firebase/firestore';
+import {auth,db} from '../utilities/firebase';
 
 //The new incoming data is assigned to the existing contacts.
 export const getContacts = createAsyncThunk('contact/getContacts', async () => {
@@ -7,7 +8,9 @@ export const getContacts = createAsyncThunk('contact/getContacts', async () => {
     let data = [];
     const snapshot = await getDocs(collection(db, 'contact'));
     snapshot.forEach(doc => {
-      data.push({...doc.data(), docId: doc.id});
+      if(doc.data().id!==auth.currentUser.uid){
+        data.push({...doc.data(), docId: doc.id});
+      }
     });
     return data;
   } catch {
