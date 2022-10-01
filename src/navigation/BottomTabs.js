@@ -34,7 +34,7 @@ const BottomTabs = () => {
           backgroundColor:
             theme === 'light' ? colors.lightBackground : colors.darkBackground,
           position: 'absolute',
-          bottom: 30,
+          bottom: 25,
           marginHorizontal: 80,
           height: 60,
           borderRadius: 25,
