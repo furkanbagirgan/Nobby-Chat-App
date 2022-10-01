@@ -5,7 +5,11 @@ import sizes from '../../../styles/fontSizes';
 import radius from '../../../styles/radius';
 import spaces from '../../../styles/spaces';
 
+//Here the basic styles of the Contact card component are created.
 const basicStyles = StyleSheet.create({
+  outerContainer: {
+    borderRadius: radius.curved,
+  },
   container: {
     width: '100%',
     height: 80,
@@ -29,6 +33,7 @@ const basicStyles = StyleSheet.create({
   },
 });
 
+//Here the changing styles of the Contact card component are created.
 const styles = {
   light: StyleSheet.create({
     ...basicStyles,

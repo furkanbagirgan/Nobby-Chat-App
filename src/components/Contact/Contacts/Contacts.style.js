@@ -1,9 +1,8 @@
 import {StyleSheet} from 'react-native';
 
 import sizes from '../../../styles/fontSizes';
-import spaces from '../../../styles/spaces';
 
-//Here the styles of the Stories component are created.
+//Here the styles of the Contacts component are created.
 const styles = StyleSheet.create({
   container: {
     flex: 1,

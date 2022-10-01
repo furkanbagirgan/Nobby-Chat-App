@@ -4,6 +4,7 @@ import colors from '../../../styles/colors';
 import spaces from '../../../styles/spaces';
 import radius from '../../../styles/radius';
 
+//Here the basic styles of the Story Card component are created.
 const basicStyles = StyleSheet.create({
   container: {
     justifyContent: 'center',
@@ -44,6 +45,7 @@ const basicStyles = StyleSheet.create({
   },
 });
 
+//Here the changing styles of the Story card component are created.
 const styles = {
   light: StyleSheet.create({
     ...basicStyles,
