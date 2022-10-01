@@ -3,7 +3,6 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 
 import styles from './ContactCard.style';
-import colors from '../../../styles/colors';
 
 const ContactCard = ({user, handlePress}) => {
   //Necessary states are created.
@@ -13,6 +12,7 @@ const ContactCard = ({user, handlePress}) => {
   return (
     <TouchableHighlight
       onPress={()=>{handlePress(user.displayName,user.photoURL)}}
+      style={styles[theme].outerContainer}
       underlayColor={theme === 'light' ? '#eee' : '#555'}>
       <View style={styles[theme].container}>
         <View style={styles[theme].imageWrapper}>

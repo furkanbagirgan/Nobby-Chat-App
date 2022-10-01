@@ -47,14 +47,15 @@ const Contacts = ({contactPress}) => {
 
   //Elements that will appear on the screen are defined here
   return (
-    <FlatList
-      contentContainerStyle={styles.container}
-      keyExtractor={keyExtractor}
-      data={contacts}
-      renderItem={renderItem}
-      overScrollMode="never"
-      bounces={false}
-    />
+    <View style={styles.container}>
+      <FlatList
+        keyExtractor={keyExtractor}
+        data={contacts}
+        renderItem={renderItem}
+        overScrollMode="never"
+        bounces={false}
+      />
+    </View>
   );
 };
 
