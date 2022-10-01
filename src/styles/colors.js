@@ -15,5 +15,7 @@ export default {
   plainBackground: '#000',
   lightBackground: '#F4F7F2',
   darkBackground: '#000',
-  primaryGradientColors: ['#77ACF1','#65C18C']
+  primaryGradientColors: ['#77ACF1', '#65C18C'],
+  lightBlurEffectColors: ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 1)'],
+  darkBlurEffectColors: ['rgba(34, 34, 34, 0)', 'rgba(34, 34, 34, 1)'],
 };
