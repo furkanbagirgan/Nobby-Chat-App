@@ -9,12 +9,12 @@ import colors from '../../styles/colors';
 import StoryModal from './../../components/Story/StoryModal';
 import ContactModal from './../../components/Contact/ContactModal';
 import Stories from './../../components/Story/Stories';
+import Chats from './../../components/Chat/Chats';
 
 const Home = ({navigation}) => {
   //Necessary states are created.
   const currentUser = useSelector(state => state.auth.currentUser);
-  const themea = useSelector(state => state.theme.theme);
-  const theme = 'light';
+  const theme = useSelector(state => state.theme.theme);
   const [dayMessage, setDayMessage] = useState('');
   const [story, setStory] = useState('');
   const [showStoryModal, setShowStoryModal] = useState(false);
@@ -118,7 +118,15 @@ const Home = ({navigation}) => {
         <Stories newStory={addNewStory} storyDetail={goToStoryDetail} />
       </View>
       {/* prints chats to the screen. */}
-      <View style={styles[theme].chatContainer}></View>
+      <View style={styles[theme].chatContainer}>
+        <Chats chatDetail={goToChat} />
+      </View>
+      <LinearGradient
+          colors={theme==='light'? colors.lightBlurEffectColors: colors.darkBlurEffectColors}
+          start={{x: 0.5, y: 0.0}}
+          end={{x: 0.5, y: 0.3}}
+          style={styles[theme].bottomContainer}
+        />
       {/* prints story and contact modals to the screen. */}
       <StoryModal
         visible={showStoryModal}
