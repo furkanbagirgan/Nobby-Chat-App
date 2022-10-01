@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Image} from 'react-native';
 import Modal from 'react-native-modal';
-import {updateDoc, doc} from 'firebase/firestore';
+import {updateDoc, doc, Timestamp} from 'firebase/firestore';
 import { useSelector } from 'react-redux';
 
 import styles from './StoryModal.style';
@@ -20,10 +20,9 @@ function StoryModal({visible, close, storyUrl}) {
     setLoading(true);
     const url = await uploadPhoto(storyUrl, 'storyImage');
     if (url !== '') {
-      const now = new Date().toISOString();
       await updateDoc(doc(db, 'contact', auth.currentUser.uid), {
         storyURL: url,
-        storyDate: now,
+        storyDate: Timestamp.fromDate(new Date()),
       });
       successMessage('Story successfully shared');
       close();
