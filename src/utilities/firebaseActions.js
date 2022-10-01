@@ -15,9 +15,9 @@ import {errorMessage, successfulMessage} from './toastMessages';
 import {setCurrentUser, resetUser} from '../redux/authSlice';
 import {setTheme} from '../redux/themeSlice';
 
-//Retrieves user information from Firestore.
-export const getUser = async () => {
-  const docRef = doc(db, 'contact', auth.currentUser.uid);
+//Retrieves user information from Firestore according to userId that coming with prop.
+export const getUser = async (userId) => {
+  const docRef = doc(db, 'contact', userId);
   const docSnap = await getDoc(docRef);
   return docSnap.data();
 };
@@ -212,8 +212,8 @@ export const deletePhoto = async (url) => {
 export const deleteStory = async (url) => {
   //Update firestore with new values
   await updateDoc(doc(db, 'contact', auth.currentUser.uid), {
-    storyDate: '',
     storyURL: '',
+    storyDate: '',
   });
   const fileRef = ref(storage, url);
   await deleteObject(fileRef);
