@@ -9,7 +9,7 @@ export const getContacts = createAsyncThunk('contact/getContacts', async () => {
     const snapshot = await getDocs(collection(db, 'contact'));
     snapshot.forEach(doc => {
       if(doc.data().id!==auth.currentUser.uid){
-        data.push({...doc.data(), docId: doc.id});
+        data.push({id:doc.data().id,displayName:doc.data().displayName,photoURL:doc.data().photoURL,docId: doc.id});
       }
     });
     return data;
