@@ -1,9 +1,16 @@
 import {FlatList} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
-import {collection, onSnapshot, query, where} from 'firebase/firestore';
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+  Timestamp,
+} from 'firebase/firestore';
 import * as ImagePicker from 'expo-image-picker';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import styles from './Stories.style';
 import StoryCard from './../StoryCard';
@@ -12,14 +19,18 @@ import {setUserStory} from './../../../redux/authSlice';
 
 const Stories = ({newStory, storyDetail}) => {
   //Necessary states are created.
-  const userStory=useSelector(state=>state.auth.userStory);
+  const userStory = useSelector(state => state.auth.userStory);
   const [stories, setStories] = useState([]);
   const [userStoryURL, setUserStoryURL] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
     //Stories retrieved from the Firestore and saved in the stories state.
-    const q = query(collection(db, 'contact'), where('storyURL', '!=', ''));
+    const q = query(
+      collection(db, 'contact'),
+      where('storyDate', '!=', ''),
+      orderBy('storyDate', 'desc'),
+    );
     const unsubscribe = onSnapshot(q, snapshot => {
       //The logged in user is added as the first element.
       const userStories = [
@@ -30,17 +41,16 @@ const Stories = ({newStory, storyDetail}) => {
         },
       ];
       //Calculates one day ahead by providing the current date.
-      const todaysDate=new Date();
-      todaysDate.setDate(new Date().getDate()-1);
+      const todaysDate = new Date();
+      todaysDate.setDate(new Date().getDate() - 1);
       snapshot.forEach(doc => {
         //It is checked whether the thrown story is within 1 day.
-        let date=new Date(doc.data().storyDate);
-        if(todaysDate<=date){
-          if(doc.data().id===auth.currentUser.uid){
+        let date = doc.data().storyDate.toDate();
+        if (todaysDate <= date) {
+          if (doc.data().id === auth.currentUser.uid) {
             dispatch(setUserStory(true));
             setUserStoryURL(doc.data().storyURL);
-          }
-          else{
+          } else {
             userStories.push({...doc.data()});
           }
         }
@@ -68,10 +78,10 @@ const Stories = ({newStory, storyDetail}) => {
   //Checking user and running appropriate function
   const checkUser = async user => {
     if (auth.currentUser.uid !== user.id) {
-      storyDetail(user.displayName, user.storyURL,false);
+      storyDetail(user.displayName, user.storyURL, false);
     } else {
       //If there is user's story then run storyDetail, if not then allows the user to select pictures by camera or gallery.
-      if(!userStory){
+      if (!userStory) {
         Alert.alert('Add Story', 'Please select the photo option', [
           {
             text: 'Camera',
@@ -100,8 +110,7 @@ const Stories = ({newStory, storyDetail}) => {
             },
           },
         ]);
-      }
-      else{
+      } else {
         storyDetail(auth.currentUser.displayName, userStoryURL, true);
       }
     }
