@@ -1,6 +1,6 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {StyleSheet,Image} from 'react-native';
+import {StyleSheet,Image,View} from 'react-native';
 import {useSelector} from 'react-redux';
 import Icon from '@expo/vector-icons/Ionicons';
 
@@ -39,12 +39,20 @@ const ContentStack = () => {
           headerTitle: route.params.displayName,
           headerShadowVisible: false,
           headerBackVisible: true,
-          headerLeft: () => (
-            <Image
-              source={{uri: route.params.photoURL}}
-              style={styles.image}
-            />
-          ),
+          headerLeft: () => {
+            return (
+              <View style={styles.imageWrapper}>
+                {route.params.photoURL !== null ? (
+                  <Image
+                    source={{uri: route.params.photoURL}}
+                    style={styles.image}
+                  />
+                ) : (
+                  <Icon name="person" color={theme === 'light' ? colors.primaryBackground : colors.secondaryBackground} size={18} />
+                )}
+              </View>
+            );
+          },
         })}
       />
       <Stack.Screen
@@ -69,11 +77,19 @@ const ContentStack = () => {
 
 //Here is the required style for the image to be displayed in the header of the chat screen.
 const styles = StyleSheet.create({
-  image: {
+  imageWrapper: {
     width: 36,
     height: 36,
     borderRadius: 18,
-    marginRight: 10
+    marginRight: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.plainText
+  },
+  image: {
+    width:'100%',
+    height: '100%',
+    borderRadius: 18
   },
 });
 
