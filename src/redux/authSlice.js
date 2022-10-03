@@ -5,7 +5,6 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: {
     currentUser: {},
-    userStory: false
   },
   reducers: {
     //The new incoming data is assigned to the existing currentUser.
@@ -22,15 +21,8 @@ const authSlice = createSlice({
         userStory: state.userStory,
       };
     },
-    //The value of currentUser is being flushed.
-    setUserStory: (state, action) => {
-      return {
-        currentUser: state.currentUser,
-        userStory: action.payload,
-      };
-    },
   },
 });
 
-export const {setCurrentUser, resetUser,setUserStory} = authSlice.actions;
+export const {setCurrentUser, resetUser} = authSlice.actions;
 export default authSlice.reducer;

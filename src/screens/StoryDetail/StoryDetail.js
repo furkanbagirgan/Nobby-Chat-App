@@ -35,7 +35,6 @@ const StoryDetail = ({route, navigation}) => {
         onPress: async () => {
           setLoading(true);
           await deleteStory(storyURL);
-          dispatch(setUserStory(false));
           setLoading(false);
           navigation.goBack();
         },
