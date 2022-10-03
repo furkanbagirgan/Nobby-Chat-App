@@ -1,28 +1,24 @@
 import {FlatList} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {Alert} from 'react-native';
 import {
   collection,
   onSnapshot,
   orderBy,
   query,
   where,
-  Timestamp,
 } from 'firebase/firestore';
-import * as ImagePicker from 'expo-image-picker';
-import {useDispatch, useSelector} from 'react-redux';
+
+import {useSelector} from 'react-redux';
 
 import styles from './Stories.style';
 import StoryCard from './../StoryCard';
-import {auth, db} from './../../../utilities/firebase';
-import {setUserStory} from './../../../redux/authSlice';
+import UserCard from './../UserCard';
+import {db} from './../../../utilities/firebase';
 
 const Stories = ({newStory, storyDetail}) => {
   //Necessary states are created.
-  const userStory = useSelector(state => state.auth.userStory);
+  const currentUser = useSelector(state => state.auth.currentUser);
   const [stories, setStories] = useState([]);
-  const [userStoryURL, setUserStoryURL] = useState('');
-  const dispatch = useDispatch();
 
   useEffect(() => {
     //Stories retrieved from the Firestore and saved in the stories state.
@@ -32,14 +28,9 @@ const Stories = ({newStory, storyDetail}) => {
       orderBy('storyDate', 'desc'),
     );
     const unsubscribe = onSnapshot(q, snapshot => {
+      const userStories = [];
       //The logged in user is added as the first element.
-      const userStories = [
-        {
-          id: auth.currentUser.uid,
-          photoURL: auth.currentUser.photoURL,
-          displayName: auth.currentUser.displayName,
-        },
-      ];
+      userStories.unshift({...currentUser});
       //Calculates one day ahead by providing the current date.
       const todaysDate = new Date();
       todaysDate.setDate(new Date().getDate() - 1);
@@ -47,10 +38,7 @@ const Stories = ({newStory, storyDetail}) => {
         //It is checked whether the thrown story is within 1 day.
         let date = doc.data().storyDate.toDate();
         if (todaysDate <= date) {
-          if (doc.data().id === auth.currentUser.uid) {
-            dispatch(setUserStory(true));
-            setUserStoryURL(doc.data().storyURL);
-          } else {
+          if (doc.data().id !== currentUser.id) {
             userStories.push({...doc.data()});
           }
         }
@@ -72,48 +60,16 @@ const Stories = ({newStory, storyDetail}) => {
   //Here, there is a function that adjusts how the areas to be repeated in the
   //flat list will appear on the screen. Also, a storyCard component is created for each chat.
   const renderItem = ({item}) => {
-    return <StoryCard user={item} handlePress={() => checkUser(item)} />;
+    if (item.id === currentUser.id) {
+      return <UserCard storyDetail={storyDetail} newStory={newStory} />;
+    } else {
+      return <StoryCard user={item} handlePress={() => checkUser(item)} />;
+    }
   };
 
   //Checking user and running appropriate function
   const checkUser = async user => {
-    if (auth.currentUser.uid !== user.id) {
-      storyDetail(user.displayName, user.storyURL, false);
-    } else {
-      //If there is user's story then run storyDetail, if not then allows the user to select pictures by camera or gallery.
-      if (!userStory) {
-        Alert.alert('Add Story', 'Please select the photo option', [
-          {
-            text: 'Camera',
-            onPress: async () => {
-              const result = await ImagePicker.launchCameraAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                allowsEditing: true,
-                quality: 0.5,
-              });
-              if (!result.cancelled) {
-                newStory(result.uri);
-              }
-            },
-          },
-          {
-            text: 'Gallery',
-            onPress: async () => {
-              const result = await ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.All,
-                allowsEditing: true,
-                quality: 0.5,
-              });
-              if (!result.cancelled) {
-                newStory(result.uri);
-              }
-            },
-          },
-        ]);
-      } else {
-        storyDetail(auth.currentUser.displayName, userStoryURL, true);
-      }
-    }
+    storyDetail(user.displayName, user.storyURL, false);
   };
 
   //Elements that will appear on the screen are defined here

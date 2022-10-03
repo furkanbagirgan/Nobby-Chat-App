@@ -8,8 +8,6 @@ import colors from '../../../styles/colors';
 
 const StoryCard = ({user, handlePress}) => {
   //Necessary states are created.
-  const currentUser = useSelector(state => state.auth.currentUser);
-  const userStory=useSelector(state=>state.auth.userStory);
   const theme = useSelector(state => state.theme.theme);
 
   //Elements that will appear on the screen are defined here
@@ -17,29 +15,16 @@ const StoryCard = ({user, handlePress}) => {
     <TouchableWithoutFeedback onPress={handlePress}>
       <View style={styles[theme].container}>
         <View
-          style={[
-            styles[theme].imageWrapper,
-            user.id !== currentUser.id ? {}
-            : !userStory ? {borderWidth: 0} : {},
-          ]}>
-          {user.photoURL !== null && user.photoURL !== '' ? (
+          style={styles[theme].imageWrapper}>
+          {user.photoURL !== null ? (
             <Image source={{uri: user.photoURL}} style={styles[theme].image} />
           ) : (
-            <Icon name="person" size={28} color={colors.plainText} />
-          )}
-          {(user.id === currentUser.id && !userStory) && (
-            <View style={styles[theme].addWrapper}>
-              <Icon name="add" size={18} color={colors.primaryBackground} />
-            </View>
+            <Icon name="person" size={36} color={colors.plainText} />
           )}
         </View>
         <Text
-          style={
-            user.id !== currentUser.id
-              ? {...styles[theme].displayName}
-              : {...styles[theme].displayName, fontWeight: 'bold'}
-          }>
-          {user.id !== currentUser.id ? user.displayName.split(' ')[0] : 'Me'}
+          style={styles[theme].displayName}>
+          {user.displayName.split(' ')[0]}
         </Text>
       </View>
     </TouchableWithoutFeedback>

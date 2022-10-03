@@ -32,17 +32,6 @@ const basicStyles = StyleSheet.create({
     flexShrink: 1,
     textAlign: 'center',
   },
-  addWrapper: {
-    position: 'absolute',
-    bottom: 3,
-    right: 0,
-    width: 20,
-    height: 20,
-    borderRadius: radius.soft,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.darkBackground,
-  },
 });
 
 //Here the changing styles of the Story card component are created.
