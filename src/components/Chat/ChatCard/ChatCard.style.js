@@ -28,6 +28,9 @@ const basicStyles = StyleSheet.create({
     width: 54,
     height: 54,
     borderRadius: radius.bigSoft,
+    backgroundColor: colors.plainText,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   image: {
     width: '100%',

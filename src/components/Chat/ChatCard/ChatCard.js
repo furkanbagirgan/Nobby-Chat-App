@@ -38,7 +38,7 @@ const ChatCard = ({userId, lastMessage, messageCount, handlePress}) => {
                 style={styles[theme].image}
               />
             ) : (
-              <Icon name="person" color={colors.plainText} size={25} />
+              <Icon name="person" color={theme === 'light' ? colors.primaryBackground : colors.secondaryBackground} size={25} />
             )}
           </View>
           <View style={styles[theme].messageWrapper}>
