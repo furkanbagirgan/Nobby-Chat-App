@@ -6,7 +6,6 @@ import {
   where,
   onSnapshot,
   orderBy,
-  Timestamp,
 } from 'firebase/firestore';
 
 import styles from './Chats.style';
