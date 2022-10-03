@@ -11,12 +11,12 @@ import {ref, deleteObject, uploadBytes, getDownloadURL} from 'firebase/storage';
 
 import {auth, db, storage} from './firebase';
 import {setItem, updateItem, removeItem} from './asyncStorage';
-import {errorMessage, successfulMessage} from './toastMessages';
-import {setCurrentUser, resetUser} from '../redux/authSlice';
+import {errorMessage, successMessage} from './toastMessages';
+import {setCurrentUser, resetUser, setUserStory} from '../redux/authSlice';
 import {setTheme} from '../redux/themeSlice';
 
 //Retrieves user information from Firestore according to userId that coming with prop.
-export const getUser = async (userId) => {
+export const getUser = async userId => {
   const docRef = doc(db, 'contact', userId);
   const docSnap = await getDoc(docRef);
   return docSnap.data();
@@ -59,13 +59,7 @@ export const loginWithUser = async (email, password, theme, dispatch) => {
 
 //Creates a new user in firebase with the incoming user data. It then saves this information to storage and redux.
 //In case of an error, it displays the toast message on the screen.
-export const createUser = async (
-  email,
-  password,
-  displayName,
-  photoURL,
-  dispatch,
-) => {
+export const createUser = async (email, password, displayName, dispatch) => {
   try {
     const {user: newUser} = await createUserWithEmailAndPassword(
       auth,
@@ -73,12 +67,12 @@ export const createUser = async (
       password,
     );
     //Update auth profile and firestore with new values
-    await updateProfile(newUser, {displayName, photoURL});
+    await updateProfile(newUser, {displayName, photoURL: ''});
     await setDoc(doc(db, 'contact', newUser.uid), {
       id: newUser.uid,
       email: email,
       displayName,
-      photoURL,
+      photoURL: null,
       storyURL: '',
       storyDate: '',
     });
@@ -88,7 +82,7 @@ export const createUser = async (
       email: email,
       password: password,
       displayName: displayName,
-      photoURL: photoURL,
+      photoURL: null,
     };
     await setItem('@userData', newUserData);
     await setItem('@themeData', 'light');
@@ -111,6 +105,7 @@ export const logOut = async dispatch => {
   await removeItem('@userData');
   await removeItem('@themeData');
   dispatch(resetUser());
+  dispatch(setUserStory(false));
   await signOut(auth);
 };
 
@@ -130,11 +125,11 @@ export const editProfile = async (
       await updatePassword(auth.currentUser, data.password);
     }
     //Check profile image and delete the old one and assign a new one, depending on the situation.
-    let image = profileImage === '' ? '' : auth.currentUser.profileURL;
-    if (profileImage !== '') {
-      if (profileImage !== auth.currentUser.profileURL) {
-        if (auth.currentUser.photoURL !== '') {
-          await deletePhoto('profileImg');
+    let image = profileImage === null ? null : userSession.photoURL;
+    if (profileImage !== null) {
+      if (profileImage !== userSession.photoURL) {
+        if (userSession.photoURL !== null) {
+          await deletePhoto(userSession.photoURL);
         }
         const result = await uploadPhoto(profileImage, 'profileImg');
         if (result !== '') {
@@ -142,8 +137,8 @@ export const editProfile = async (
         }
       }
     } else {
-      if (auth.currentUser.profileURL !== '') {
-        const fileRef = ref(storage, auth.currentUser.uid + '-profileImg');
+      if (userSession.photoURL !== null) {
+        const fileRef = ref(storage, userSession.photoURL);
         await deleteObject(fileRef);
       }
     }
@@ -151,14 +146,26 @@ export const editProfile = async (
     await updateDoc(doc(db, 'contact', auth.currentUser.uid), {
       email: data.email,
       displayName: data.displayName,
-      profileURL: image,
+      photoURL: image,
     });
     //Update async storage with new values
-    await updateItem('@userData', {...data, photoURL: image});
+    await updateItem('@userData', {
+      ...data,
+      id: auth.currentUser.uid,
+      photoURL: image,
+    });
+    //Update auth profile with new values
+    await updateProfile(auth.currentUser, {
+      displayName: data.displayName,
+      photoURL: image === null ? '' : image,
+    });
     //Update redux with new values
-    dispatch(setCurrentUser({...data, photoURL: image}));
-    successfulMessage('The profile has been successfully updated');
+    dispatch(
+      setCurrentUser({...data, id: auth.currentUser.uid, photoURL: image}),
+    );
+    successMessage('The profile has been successfully updated');
   } catch (error) {
+    console.log(error);
     switch (error.code) {
       case 'auth/email-already-in-use':
         errorMessage('An account already exists for this email!');
@@ -198,9 +205,12 @@ export const uploadPhoto = async (image, name) => {
 };
 
 //Delete photo from firestore and storage
-export const deletePhoto = async (url) => {
+export const deletePhoto = async url => {
   //Update auth profile and firestore with new values
-  await updateProfile(auth.currentUser, {displayName:auth.currentUser.displayName, photoURL:''});
+  await updateProfile(auth.currentUser, {
+    displayName: auth.currentUser.displayName,
+    photoURL: null,
+  });
   await updateDoc(doc(db, 'contact', auth.currentUser.uid), {
     photoURL: '',
   });
@@ -209,7 +219,7 @@ export const deletePhoto = async (url) => {
 };
 
 //Delete story from firestore and storage
-export const deleteStory = async (url) => {
+export const deleteStory = async url => {
   //Update firestore with new values
   await updateDoc(doc(db, 'contact', auth.currentUser.uid), {
     storyURL: '',

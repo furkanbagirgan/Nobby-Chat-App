@@ -40,7 +40,6 @@ const Signup = () => {
         data.email,
         data.password,
         data.displayName,
-        '',
         dispatch,
       );
     }
