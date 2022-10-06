@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Image, Text, Alert} from 'react-native';
+import {View, Image, Text, Alert, ScrollView} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {useForm, Controller} from 'react-hook-form';
 import Icon from '@expo/vector-icons/Ionicons';
@@ -106,13 +106,17 @@ const Profile = () => {
   };
 
   //Sign out of firebase
-  const signOut= async()=>{
+  const signOut = async () => {
     await logOut(dispatch);
-  }
+  };
 
   //Elements that will appear on the screen are defined here
   return (
-    <View style={styles[theme].container}>
+    <ScrollView
+      style={styles[theme].container}
+      contentContainerStyle={styles[theme].contentContainer}
+      overScrollMode="never"
+      bounces={false}>
       <View style={styles[theme].imageWrapper}>
         {profileImage !== null ? (
           <Image source={{uri: profileImage}} style={styles[theme].image} />
@@ -245,13 +249,9 @@ const Profile = () => {
           onClick={handleSubmit(save)}
           theme="dark"
         />
-        <Button
-          title="Sign out"
-          onClick={signOut}
-          theme="dark"
-        />
+        <Button title="Sign out" onClick={signOut} theme="dark" />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

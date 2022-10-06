@@ -8,6 +8,8 @@ import spaces from '../../styles/spaces';
 const basicStyles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  contentContainer: {
     alignItems: 'center',
     paddingTop: StatusBar.currentHeight ? StatusBar.currentHeight : 0,
     paddingHorizontal: spaces.padding.large,
