@@ -1,4 +1,5 @@
 export default {
+  micro: 9,
   tiny: 12,
   small: 14,
   medium: 16,
