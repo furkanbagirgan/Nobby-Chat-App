@@ -46,8 +46,8 @@ const Home = ({navigation}) => {
   };
 
   //Here is the function that allows switching to the message screen when each contactCard or chatCard component is clicked.
-  const goToChat = (displayName, photoURL) => {
-    navigation.navigate('Message', {displayName, photoURL});
+  const goToChat = (displayName, photoURL, id) => {
+    navigation.navigate('Message', {displayName, photoURL, id});
   };
 
   //Here is the function that allows switching to the story detail screen when each storyCard component is clicked.
