@@ -18,7 +18,7 @@ function Input(props) {
         {...props}
         placeholderTextColor={colors.plainText}
         style={styles[props.theme].input}
-        editable={props.enable}
+        editable={props.enable? props.enable : true}
       />
     </View>
   );
