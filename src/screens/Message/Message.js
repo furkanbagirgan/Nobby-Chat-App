@@ -9,11 +9,15 @@ import {
   onSnapshot,
   getDocs,
   doc,
+  Timestamp,
+  GeoPoint
 } from 'firebase/firestore';
+import * as Location from 'expo-location';
 
 import styles from './Message.style';
 import colors from '../../styles/colors';
 import Input from '../../components/Input';
+import MapModal from '../../components/Message/MapModal';
 import TextMessage from '../../components/Message/TextMessage';
 //import LocationMessage from '../../components/Message/LocationMessage';
 import {db} from '../../utilities/firebase';
@@ -26,12 +30,14 @@ const Message = ({route}) => {
   const {id} = route.params;
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState([]);
-  let listRef=null;
+  const [messageDoc, setMessageDoc] = useState('');
+  const [showMapModal, setShowMapModal] = useState(false);
+  const [userLocation,setUserLocation] = useState(new GeoPoint(38.72049, 35.482597));
 
   //Here, the messages belonging to the receiver id, that come as a parameter, in the message collection
   //on the firestore are checked and thrown into the messages state.
   useEffect(() => {
-    let messageDoc = '';
+    let messageDocId = '';
     let unsubscribe = () => {};
     async function getData() {
       const q = query(
@@ -41,11 +47,12 @@ const Message = ({route}) => {
       const docs = await getDocs(q);
       docs.forEach(doc => {
         if (doc.data().members.includes(id)) {
-          messageDoc = doc.id;
+          messageDocId = doc.id;
         }
       });
-      unsubscribe = onSnapshot(doc(db, 'message', messageDoc), snapshot => {
-        setMessages([...snapshot.data().messages]);
+      unsubscribe = onSnapshot(doc(db, 'message', messageDocId), snapshot => {
+        setMessages([...snapshot.data().messages.reverse()]);
+        setMessageDoc(messageDocId);
       });
     }
     getData();
@@ -75,28 +82,51 @@ const Message = ({route}) => {
 
   //A new message or an additional messages to the existing one is created and saved firestore.
   const sendMessage = async () => {
-    await addMessage(message);
+    setMessage('');
+    const newMessage = {
+      message,
+      senderId: currentUser.id,
+      receiverId: id,
+      type: 'text',
+      seen: false,
+      date: Timestamp.now(),
+    };
+    await addMessage(messages, newMessage, messageDoc);
   };
 
   //A new location is created and saved firestore.
-  const sendLocation = async () => {};
+  const sendLocation = async () => {
+    const {status} = await Location.requestForegroundPermissionsAsync();
+    if (status === 'granted') {
+      //Get user location
+      const resultLoc = await Location.getCurrentPositionAsync({});
+      const currentLocation = new GeoPoint(
+        resultLoc.coords.latitude,
+        resultLoc.coords.longitude,
+      );
+      setUserLocation(currentLocation);
+      setShowMapModal(true);
+    }
+  };
 
   //Elements that will appear on the screen are defined here
   return (
     <View style={styles[theme].container}>
       <FlatList
-        ref={(ref)=>(listRef=ref)}
-        contentContainerStyle={messages.length ===0 ? styles[theme].emptyList : {}}
+        contentContainerStyle={
+          messages.length === 0 ? styles[theme].emptyList : {}
+        }
         fadingEdgeLength={30}
         keyExtractor={keyExtractor}
         data={messages}
         renderItem={renderItem}
         overScrollMode="never"
         bounces={false}
-        onContentSizeChange={()=>listRef.scrollToEnd()}
-        ListEmptyComponent={()=><Text style={styles[theme].emptyText}>You have no messages yet</Text>}
+        ListEmptyComponent={() => (
+          <Text style={styles[theme].emptyText}>You have no messages yet</Text>
+        )}
+        inverted
       />
-      
       <View style={styles[theme].bottomContainer}>
         <View style={styles[theme].inputWrapper}>
           <Input
@@ -127,6 +157,8 @@ const Message = ({route}) => {
           />
         </View>
       </View>
+      {/* prints map modal to the screen. */}
+      <MapModal visible={showMapModal} close={setShowMapModal} userLocation={userLocation} />
     </View>
   );
 };
