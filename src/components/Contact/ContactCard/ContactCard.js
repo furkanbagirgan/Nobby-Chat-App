@@ -14,7 +14,7 @@ const ContactCard = ({user, handlePress}) => {
   return (
     <TouchableHighlight
       onPress={() => {
-        handlePress(user.displayName, user.photoURL);
+        handlePress(user.displayName, user.photoURL, user.id);
       }}
       style={styles[theme].outerContainer}
       underlayColor={theme === 'light' ? '#eee' : '#555'}>
@@ -34,7 +34,7 @@ const ContactCard = ({user, handlePress}) => {
             />
           )}
         </View>
-        <Text style={styles[theme].displayName}>{user.displayName}</Text>
+        <Text style={styles[theme].displayName} numberOfLines={1}>{user.displayName}</Text>
       </View>
     </TouchableHighlight>
   );

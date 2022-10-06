@@ -25,7 +25,7 @@ const ChatCard = ({userId, lastMessage, messageCount, handlePress}) => {
   return (
     <TouchableHighlight
       onPress={() => {
-        handlePress(user.displayName, user.photoURL);
+        handlePress(user.displayName, user.photoURL, user.id);
       }}
       style={styles[theme].outerContainer}
       underlayColor={theme === 'light' ? '#eee' : '#555'}>
@@ -43,9 +43,9 @@ const ChatCard = ({userId, lastMessage, messageCount, handlePress}) => {
           </View>
           <View style={styles[theme].messageWrapper}>
             <Text style={styles[theme].displayName}>{user.displayName}</Text>
-            <Text style={styles[theme].message}>
+            <Text style={styles[theme].message} numberOfLines={1}>
               {lastMessage.senderId === auth.currentUser.uid
-                ? 'Ben:' + lastMessage.message
+                ? 'Me:' + lastMessage.message
                 : lastMessage.message}
             </Text>
           </View>

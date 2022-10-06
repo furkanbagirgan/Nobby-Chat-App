@@ -41,6 +41,7 @@ const basicStyles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     marginLeft: spaces.margin.medium,
+    maxWidth: '77%',
   },
   displayName: {
     fontWeight: '600',
@@ -48,7 +49,7 @@ const basicStyles = StyleSheet.create({
   },
   message: {
     fontSize: sizes.tiny,
-    marginTop: spaces.margin.tiny
+    marginTop: spaces.margin.tiny,
   },
   detailWrapper: {
     flexDirection: 'column',

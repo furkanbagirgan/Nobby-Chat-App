@@ -32,7 +32,8 @@ const basicStyles = StyleSheet.create({
   },
   displayName: {
     fontSize: sizes.medium,
-    marginLeft: spaces.margin.medium
+    marginLeft: spaces.margin.medium,
+    maxWidth: '75%',
   },
 });
 
