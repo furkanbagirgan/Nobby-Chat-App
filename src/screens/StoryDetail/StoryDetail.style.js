@@ -17,6 +17,13 @@ const basicStyles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.darkBackground,
   },
+  imageLoadingWrapper: {
+    width: '100%',
+    height: '100%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   errorWrapper: {
     flex: 1,
     flexDirection: 'column',

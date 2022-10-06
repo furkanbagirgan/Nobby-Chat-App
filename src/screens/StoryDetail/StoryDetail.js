@@ -17,9 +17,10 @@ import {setUserStory} from '../../redux/authSlice';
 
 const StoryDetail = ({route, navigation}) => {
   //Necessary states are created.
-  const {displayName, storyURL, removeStory} = route.params;
+  const {storyURL, removeStory} = route.params;
   const theme = useSelector(state => state.theme.theme);
   const [loading, setLoading] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false);
   const dispatch = useDispatch();
 
   //If the user is sure about deleting the story, the story is deleted and
@@ -56,7 +57,8 @@ const StoryDetail = ({route, navigation}) => {
     <SafeAreaView style={styles[theme].container}>
       {storyURL !== '' ? (
         <>
-          <Image source={{uri: storyURL}} style={styles[theme].image} />
+          {imageLoading && <View style={styles[theme].imageLoadingWrapper}><ActivityIndicator color={colors.primaryBackground} size={35} /></View>}
+          <Image source={{uri: storyURL}} onLoadStart={()=>setImageLoading(true)} onLoadEnd={()=>setImageLoading(false)} style={styles[theme].image}/>
           {removeStory && (
             <View style={styles[theme].deleteWrapper}>
               <Icon
