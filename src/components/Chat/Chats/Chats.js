@@ -1,4 +1,4 @@
-import {FlatList, View} from 'react-native';
+import {FlatList, View, Text} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
   collection,
@@ -68,12 +68,14 @@ const Chats = ({chatDetail}) => {
   return (
     <View style={styles.container}>
       <FlatList
+        contentContainerStyle={chats.length === 0 ? styles.emptyList : {}}
         keyExtractor={keyExtractor}
         data={chats}
         renderItem={renderItem}
         overScrollMode="never"
         bounces={false}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={()=><Text style={styles.emptyText}>You have no messages yet</Text>}
       />
     </View>
   );
