@@ -46,6 +46,12 @@
           "photosPermission": "Allow Nobby Chat to access your photos",
           "cameraPermission": "Allow Nobby Chat to access your camera"
         }
+      ],
+      [
+        "expo-location",
+        {
+          "ACCESS_FINE_LOCATION": "Allow Nobby Chat to access your location"
+        }
       ]
     ]
   }
