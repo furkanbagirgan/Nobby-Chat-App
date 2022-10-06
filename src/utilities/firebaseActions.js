@@ -228,3 +228,14 @@ export const deleteStory = async url => {
   const fileRef = ref(storage, url);
   await deleteObject(fileRef);
 };
+
+//Save new message to firestore
+export const addMessage = async (messages,newMessage,docId) => {
+  //Update firestore with new values
+  const newMessages=messages.reverse();
+  newMessages.push(newMessage);
+  await updateDoc(doc(db, 'message', docId), {
+    lastDate: newMessage.date,
+    messages: newMessages,
+  });
+}
