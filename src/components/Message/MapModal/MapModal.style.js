@@ -29,6 +29,11 @@ const basicStyles = StyleSheet.create({
     marginBottom: spaces.margin.big,
     alignSelf: 'center'
   },
+  buttonWrapper: {
+    position: 'absolute',
+    bottom: 15,
+    right: 15,
+  },
   mapContainer: {
     flex: 1
   }
