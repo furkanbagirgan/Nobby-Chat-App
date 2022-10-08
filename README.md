@@ -32,7 +32,6 @@ The user can switch to the profile screen where can change personal information 
 
 ## Screen Videos
 https://user-images.githubusercontent.com/48411349/194715820-db55058e-daeb-499c-aec8-ae7f27039655.mp4
-
 https://user-images.githubusercontent.com/48411349/194715469-edb07d31-7fd2-45f3-aa0f-91bd7180dbea.mp4
 
 ## Screen Shots
