@@ -1,15 +1,12 @@
 import {StyleSheet} from 'react-native';
 
 import colors from './../../styles/colors';
-import radius from './../../styles/radius';
 
 //Here the basic styles of the Contact screen are created.
 const basicStyles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    borderTopLeftRadius: radius.largeSoft,
-    borderTopRightRadius: radius.largeSoft,
     paddingTop: 18,
   },
 });
