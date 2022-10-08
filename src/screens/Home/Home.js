@@ -7,7 +7,6 @@ import {LinearGradient} from 'expo-linear-gradient';
 import styles from './Home.style';
 import colors from '../../styles/colors';
 import StoryModal from './../../components/Story/StoryModal';
-import ContactModal from './../../components/Contact/ContactModal';
 import Stories from './../../components/Story/Stories';
 import Chats from './../../components/Chat/Chats';
 
@@ -18,7 +17,6 @@ const Home = ({navigation}) => {
   const [dayMessage, setDayMessage] = useState('');
   const [story, setStory] = useState('');
   const [showStoryModal, setShowStoryModal] = useState(false);
-  const [showContactModal, setShowContactModal] = useState(false);
 
   //Runs the adjustDayMessage function when the screen is first turned on.
   useEffect(() => {
@@ -61,9 +59,9 @@ const Home = ({navigation}) => {
     storyModalToggle();
   };
 
-  //Allows the contact modal to close if it is open, and to open if it is closed.
-  const contactModalToggle = () => {
-    setShowContactModal(!showContactModal);
+  //Navigate too contact screen.
+  const goToContact = () => {
+    navigation.navigate('Contact');
   };
 
   //Allows the story modal to close if it is open, and to open if it is closed.
@@ -93,7 +91,7 @@ const Home = ({navigation}) => {
                 name="add"
                 color={colors.plainText}
                 size={25}
-                onPress={contactModalToggle}
+                onPress={goToContact}
               />
             </View>
             <Text style={styles[theme].headerText}>Message</Text>
@@ -121,22 +119,11 @@ const Home = ({navigation}) => {
       <View style={styles[theme].chatContainer}>
         <Chats chatDetail={goToChat} />
       </View>
-      <LinearGradient
-          colors={theme==='light'? colors.lightBlurEffectColors: colors.darkBlurEffectColors}
-          start={{x: 0.5, y: 0.0}}
-          end={{x: 0.5, y: 0.3}}
-          style={styles[theme].bottomContainer}
-        />
       {/* prints story and contact modals to the screen. */}
       <StoryModal
         visible={showStoryModal}
         close={storyModalToggle}
         storyUrl={story}
-      />
-      <ContactModal
-        visible={showContactModal}
-        close={contactModalToggle}
-        contactPress={goToChat}
       />
     </LinearGradient>
   );
