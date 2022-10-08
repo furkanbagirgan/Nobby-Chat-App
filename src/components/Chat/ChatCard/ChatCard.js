@@ -38,15 +38,27 @@ const ChatCard = ({userId, lastMessage, messageCount, handlePress}) => {
                 style={styles[theme].image}
               />
             ) : (
-              <Icon name="person" color={theme === 'light' ? colors.primaryBackground : colors.secondaryBackground} size={25} />
+              <Icon
+                name="person"
+                color={
+                  theme === 'light'
+                    ? colors.primaryBackground
+                    : colors.secondaryBackground
+                }
+                size={25}
+              />
             )}
           </View>
           <View style={styles[theme].messageWrapper}>
             <Text style={styles[theme].displayName}>{user.displayName}</Text>
             <Text style={styles[theme].message} numberOfLines={1}>
               {lastMessage.senderId === auth.currentUser.uid
-                ? 'Me:' + lastMessage.message
-                : lastMessage.message}
+                ? lastMessage.message.latitude
+                  ? 'Me:' + 'Location'
+                  : 'Me:' + lastMessage.message
+                : lastMessage.message.latitude
+                ? 'Me:' + 'Location'
+                : 'Me:' + lastMessage.message}
             </Text>
           </View>
         </View>
@@ -56,12 +68,11 @@ const ChatCard = ({userId, lastMessage, messageCount, handlePress}) => {
               ':' +
               lastMessage.date.toDate().getMinutes().toString()}
           </Text>
-          {lastMessage.senderId !== auth.currentUser.uid ? 
-            (messageCount !== 0 && 
-              <View style={styles[theme].countWrapper}>
-                <Text style={styles[theme].count}>{messageCount}</Text>
-              </View>
-            ) : (
+          {messageCount !== 0 ? (
+            <View style={styles[theme].countWrapper}>
+              <Text style={styles[theme].count}>{messageCount}</Text>
+            </View>
+          ) : (
             <Icon
               name="checkmark-done"
               color={lastMessage.seen ? colors.primaryBlue : colors.plainText}
