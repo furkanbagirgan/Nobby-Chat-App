@@ -114,7 +114,6 @@ export const logOut = async dispatch => {
   await removeItem('@userData');
   await removeItem('@themeData');
   dispatch(resetUser());
-  dispatch(setUserStory(false));
   await signOut(auth);
 };
 
