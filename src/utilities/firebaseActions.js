@@ -6,7 +6,7 @@ import {
   updateEmail,
   updatePassword,
 } from 'firebase/auth';
-import {doc, setDoc, updateDoc, getDoc} from 'firebase/firestore';
+import {doc, setDoc, updateDoc, getDoc, arrayUnion, addDoc, Timestamp, collection} from 'firebase/firestore';
 import {ref, deleteObject, uploadBytes, getDownloadURL} from 'firebase/storage';
 
 import {auth, db, storage} from './firebase';
@@ -230,12 +230,19 @@ export const deleteStory = async url => {
 };
 
 //Save new message to firestore
-export const addMessage = async (messages,newMessage,docId) => {
+export const addMessage = async (newMessage,docId) => {
   //Update firestore with new values
-  const newMessages=messages.reverse();
-  newMessages.push(newMessage);
   await updateDoc(doc(db, 'message', docId), {
     lastDate: newMessage.date,
-    messages: newMessages,
+    messages: arrayUnion(newMessage),
+  });
+}
+
+//Add new message document aka chat to firestore
+export const addNewChat = async (senderId,receiverId, message) => {
+  await addDoc(collection(db, "message"), {
+    lastDate: Timestamp.now(),
+    members: [senderId,receiverId],
+    messages: [{...message}]
   });
 }
