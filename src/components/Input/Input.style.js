@@ -16,8 +16,9 @@ const basicStyles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    marginLeft: spaces.margin.tiny,
     flex: 1,
+    marginLeft: spaces.margin.tiny,
+    color: colors.darkText,
   },
 });
 
@@ -29,10 +30,6 @@ const styles = {
       ...basicStyles.container,
       backgroundColor: colors.lightBackground,
     },
-    input: {
-      ...basicStyles.input,
-      color: colors.plainText,
-    }
   }),
   dark: StyleSheet.create({
     ...basicStyles,
@@ -40,10 +37,6 @@ const styles = {
       ...basicStyles.container,
       backgroundColor: colors.plainBackground,
     },
-    input: {
-      ...basicStyles.input,
-      color: colors.plainText,
-    }
   }),
 };
 
