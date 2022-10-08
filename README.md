@@ -85,7 +85,7 @@ yarn install
 ```
 3.Run Project To Emulator or Real Device With Expo Go App
 ```
-npx expo start | npx expo run:android | npx expo run:ios
+npx expo start | npx expo run:android
 or
-yarn expo start | yarn expo run:android | yarn expo run:ios
+yarn expo start | yarn expo run:android
 ```
