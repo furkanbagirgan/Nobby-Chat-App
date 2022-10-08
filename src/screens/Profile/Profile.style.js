@@ -11,7 +11,7 @@ const basicStyles = StyleSheet.create({
   },
   contentContainer: {
     alignItems: 'center',
-    paddingTop: StatusBar.currentHeight ? StatusBar.currentHeight : 0,
+    paddingTop: StatusBar.currentHeight ? StatusBar.currentHeight+20 : 20,
     paddingHorizontal: spaces.padding.large,
   },
   buttonWrapper: {
@@ -62,6 +62,22 @@ const basicStyles = StyleSheet.create({
   },
   editIcon: {
     marginLeft: spaces.margin.medium
+  },
+  themeContainer: {
+    width: 50,
+    height: 110,
+    position: 'absolute',
+    top: StatusBar.currentHeight ? StatusBar.currentHeight+10 : 25,
+    right: 15,
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  themeWrapper: {
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: radius.mediumSoft,
   }
 });
 
@@ -73,12 +89,30 @@ const styles = {
       ...basicStyles.container,
       backgroundColor: colors.primaryBackground,
     },
+    lightTheme: {
+      ...basicStyles.themeWrapper,
+      backgroundColor: '#F2F2F2',
+    },
+    darkTheme: {
+      ...basicStyles.themeWrapper,
+      marginTop: spaces.margin.medium,
+      backgroundColor: '#555',
+    },
   }),
   dark: StyleSheet.create({
     ...basicStyles,
     container: {
       ...basicStyles.container,
       backgroundColor: colors.secondaryBackground,
+    },
+    lightTheme: {
+      ...basicStyles.themeWrapper,
+      backgroundColor: '#F2F2F2',
+    },
+    darkTheme: {
+      ...basicStyles.themeWrapper,
+      marginTop: spaces.margin.medium,
+      backgroundColor: '#555',
     },
   }),
 };

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Image, Text, Alert, ScrollView} from 'react-native';
+import {View, Image, Text, Alert, ScrollView, TouchableWithoutFeedback} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {useForm, Controller} from 'react-hook-form';
 import Icon from '@expo/vector-icons/Ionicons';
@@ -12,6 +12,8 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import {editProfile, logOut} from '../../utilities/firebaseActions';
 import {checkSignup} from '../../utilities/authValidation';
+import {removeItem,setItem} from '../../utilities/asyncStorage';
+import {setTheme} from '../../redux/themeSlice';
 
 const Profile = () => {
   //Necessary states are created.
@@ -37,6 +39,7 @@ const Profile = () => {
     },
   });
 
+  //
   const editValue = inputName => {
     let iconName = '';
     if (editInput[inputName].icon === 'pencil') {
@@ -110,6 +113,13 @@ const Profile = () => {
     await logOut(dispatch);
   };
 
+  //Here, the existing theme is changed according to the clicked theme.
+  const changeTheme = async themeName => {
+    await removeItem('@themeData');
+    await setItem('@themeData', themeName);
+    dispatch(setTheme(themeName));
+  };
+
   //Elements that will appear on the screen are defined here
   return (
     <ScrollView
@@ -117,6 +127,18 @@ const Profile = () => {
       contentContainerStyle={styles[theme].contentContainer}
       overScrollMode="never"
       bounces={false}>
+      <View style={styles[theme].themeContainer}>
+        <TouchableWithoutFeedback onPress={() => changeTheme('light')}>
+          <View style={styles[theme].lightTheme}>
+            <Icon name="sunny-outline" size={25} color="#A9A9A9" />
+          </View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={() => changeTheme('dark')}>
+          <View style={styles[theme].darkTheme}>
+            <Icon name="moon-outline" size={25} color="#A9A9A9" />
+          </View>
+        </TouchableWithoutFeedback>
+      </View>
       <View style={styles[theme].imageWrapper}>
         {profileImage !== null ? (
           <Image source={{uri: profileImage}} style={styles[theme].image} />
