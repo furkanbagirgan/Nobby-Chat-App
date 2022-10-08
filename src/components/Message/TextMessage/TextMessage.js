@@ -10,27 +10,23 @@ import colors from './../../../styles/colors';
 const TextMessage = ({message}) => {
   //Necessary states are created.
   const [date, setDate] = useState('');
-  const [sender, setSender] = useState(false);
 
   //When the component is first created, the date of the incoming message is formatted.
   //In addition, it is determined who the sender of the message is.
   useEffect(() => {
     const formattedDate = formatDate(message.date.toDate());
     setDate(formattedDate);
-    if (message.senderId === auth.currentUser.uid) {
-      setSender(true);
-    }
   }, []);
 
   //Here, messages are created by checking the status of the sender via the incoming message prop.
   return (
-    <View style={sender ? styles.sendContainer : styles.receiveContainer}>
+    <View style={message.senderId === auth.currentUser.uid ? styles.sendContainer : styles.receiveContainer}>
       <View style={styles.messageWrapper}>
         <Text style={styles.message}>{message.message}</Text>
       </View>
       <View style={styles.timeWrapper}>
         <Text style={styles.time}>{date}</Text>
-        {sender &&
+        {message.senderId === auth.currentUser.uid &&
           (message.seen ? (
             <Icon
               name="checkmark-done"
