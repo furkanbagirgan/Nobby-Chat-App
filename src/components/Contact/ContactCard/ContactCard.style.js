@@ -23,7 +23,7 @@ const basicStyles = StyleSheet.create({
     borderRadius: radius.bigSoft,
     backgroundColor: colors.plainText,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   image: {
     width: '100%',

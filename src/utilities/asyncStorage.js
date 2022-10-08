@@ -5,8 +5,10 @@ import {errorMessage} from './toastMessages';
 export const setItem = async (key, value) => {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value));
-  } catch {
-    errorMessage('Could not write to storage!');
+  } catch (error) {
+    errorMessage(
+      'Could not write to storage!' + error.code ? ' Code:' + error.code : '',
+    );
   }
 };
 
@@ -19,8 +21,10 @@ export const getItem = async key => {
     } else {
       return 0;
     }
-  } catch {
-    errorMessage('Storage could not be read!');
+  } catch (error) {
+    errorMessage(
+      'Storage could not be read!' + error.code ? ' Code:' + error.code : '',
+    );
     return 0;
   }
 };
@@ -29,8 +33,10 @@ export const getItem = async key => {
 export const updateItem = async (key, value) => {
   try {
     await AsyncStorage.mergeItem(key, JSON.stringify(value));
-  } catch {
-    errorMessage('Could not update storage!');
+  } catch (error) {
+    errorMessage(
+      'Could not update storage!' + error.code ? ' Code:' + error.code : '',
+    );
   }
 };
 
@@ -38,7 +44,11 @@ export const updateItem = async (key, value) => {
 export const removeItem = async key => {
   try {
     await AsyncStorage.removeItem(key);
-  } catch {
-    errorMessage('Could not delete from storage!');
+  } catch (error) {
+    errorMessage(
+      'Could not delete from storage!' + error.code
+        ? ' Code:' + error.code
+        : '',
+    );
   }
 };

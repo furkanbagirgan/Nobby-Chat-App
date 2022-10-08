@@ -13,11 +13,11 @@ const styles = StyleSheet.create({
   emptyList: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   emptyText: {
-    color: colors.plainText
-  }
+    color: colors.plainText,
+  },
 });
 
 export default styles;

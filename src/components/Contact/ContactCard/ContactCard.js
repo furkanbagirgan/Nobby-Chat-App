@@ -34,7 +34,9 @@ const ContactCard = ({user, handlePress}) => {
             />
           )}
         </View>
-        <Text style={styles[theme].displayName} numberOfLines={1}>{user.displayName}</Text>
+        <Text style={styles[theme].displayName} numberOfLines={1}>
+          {user.displayName}
+        </Text>
       </View>
     </TouchableHighlight>
   );

@@ -14,16 +14,14 @@ const StoryCard = ({user, handlePress}) => {
   return (
     <TouchableWithoutFeedback onPress={handlePress}>
       <View style={styles[theme].container}>
-        <View
-          style={styles[theme].imageWrapper}>
+        <View style={styles[theme].imageWrapper}>
           {user.photoURL !== null ? (
             <Image source={{uri: user.photoURL}} style={styles[theme].image} />
           ) : (
             <Icon name="person" size={36} color={colors.plainText} />
           )}
         </View>
-        <Text
-          style={styles[theme].displayName}>
+        <Text style={styles[theme].displayName}>
           {user.displayName.split(' ')[0]}
         </Text>
       </View>

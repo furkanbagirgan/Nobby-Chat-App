@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     paddingRight: spaces.padding.small,
     borderBottomLeftRadius: 0,
   },
-  image:{
+  image: {
     width: 150,
     height: 150,
     borderRadius: radius.hugeSoft,

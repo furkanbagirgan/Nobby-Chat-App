@@ -1,4 +1,4 @@
-import {StyleSheet,StatusBar} from 'react-native';
+import {StyleSheet, StatusBar} from 'react-native';
 
 import colors from '../../styles/colors';
 import sizes from '../../styles/fontSizes';
@@ -11,7 +11,7 @@ const basicStyles = StyleSheet.create({
     flex: 1,
     paddingTop: StatusBar.currentHeight ? StatusBar.currentHeight : 0,
   },
-  headerContainer:{
+  headerContainer: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -19,13 +19,13 @@ const basicStyles = StyleSheet.create({
     paddingHorizontal: spaces.padding.large,
     marginTop: spaces.margin.medium,
     marginBottom: spaces.margin.huge,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   leftContainer: {
     justifyContent: 'center',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
   },
-  displayName:{
+  displayName: {
     fontSize: sizes.xlarge,
     fontWeight: 'bold',
     color: colors.primaryText,
@@ -34,8 +34,8 @@ const basicStyles = StyleSheet.create({
   rightContainer: {
     flexDirection: 'row',
   },
-  headerText:{
-    fontSize: sizes.tiny
+  headerText: {
+    fontSize: sizes.tiny,
   },
   newMessageWrapper: {
     justifyContent: 'center',
@@ -46,28 +46,28 @@ const basicStyles = StyleSheet.create({
     height: 40,
     borderRadius: radius.largeSoft,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
-  userWrapper:{
+  userWrapper: {
     alignItems: 'center',
     marginLeft: spaces.margin.medium,
   },
-  imageWrapper:{
+  imageWrapper: {
     width: 40,
     height: 40,
     borderRadius: radius.largeSoft,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   image: {
     width: '100%',
     height: '100%',
     borderRadius: radius.hugeSoft,
   },
-  storiesContainer:{
+  storiesContainer: {
     width: '100%',
     backgroundColor: 'transparent',
-    marginBottom: spaces.margin.huge
+    marginBottom: spaces.margin.huge,
   },
   chatContainer: {
     flex: 1,
@@ -80,7 +80,7 @@ const basicStyles = StyleSheet.create({
     left: 0,
     width: '100%',
     height: 110,
-  }
+  },
 });
 
 //Here the changing styles of the Home screen are created.
@@ -99,17 +99,17 @@ const styles = {
       ...basicStyles.iconWrapper,
       backgroundColor: colors.primaryBackground,
     },
-    headerMessage:{
+    headerMessage: {
       color: colors.secondaryText,
     },
-    headerText:{
+    headerText: {
       ...basicStyles.headerText,
       color: colors.secondaryText,
     },
     chatContainer: {
       ...basicStyles.chatContainer,
-      backgroundColor: colors.primaryBackground
-    }
+      backgroundColor: colors.primaryBackground,
+    },
   }),
   dark: StyleSheet.create({
     ...basicStyles,
@@ -125,17 +125,17 @@ const styles = {
       ...basicStyles.iconWrapper,
       backgroundColor: colors.secondaryBackground,
     },
-    headerMessage:{
+    headerMessage: {
       color: colors.darkText,
     },
-    headerText:{
+    headerText: {
       ...basicStyles.headerText,
       color: colors.darkText,
     },
     chatContainer: {
       ...basicStyles.chatContainer,
-      backgroundColor: colors.secondaryBackground
-    }
+      backgroundColor: colors.secondaryBackground,
+    },
   }),
 };
 

@@ -25,39 +25,45 @@ const LocationMessage = ({message}) => {
   }, []);
 
   //Open map modal
-  const goToMap=()=>{
+  const goToMap = () => {
     setShowModal(true);
-  }
+  };
 
   //Here, message are created by checking the status of the sender via the incoming message prop.
   return (
     <>
-    <View style={sender ? styles.sendContainer : styles.receiveContainer}>
-      <Pressable onPress={goToMap}>
-        <Image source={{uri: message.previewImage}} style={styles.image} />
-      </Pressable>
-      <View style={styles.timeWrapper}>
-        <Text style={styles.time}>{date}</Text>
-        {sender &&
-          (message.seen ? (
-            <Icon
-              name="checkmark-done"
-              color={colors.secondaryBlue}
-              size={15}
-              style={styles.icon}
-            />
-          ) : (
-            <Icon
-              name="checkmark-done"
-              color={colors.primaryBackground}
-              size={15}
-              style={styles.icon}
-            />
-          ))}
+      <View style={sender ? styles.sendContainer : styles.receiveContainer}>
+        <Pressable onPress={goToMap}>
+          <Image source={{uri: message.previewImage}} style={styles.image} />
+        </Pressable>
+        <View style={styles.timeWrapper}>
+          <Text style={styles.time}>{date}</Text>
+          {sender &&
+            (message.seen ? (
+              <Icon
+                name="checkmark-done"
+                color={colors.secondaryBlue}
+                size={15}
+                style={styles.icon}
+              />
+            ) : (
+              <Icon
+                name="checkmark-done"
+                color={colors.primaryBackground}
+                size={15}
+                style={styles.icon}
+              />
+            ))}
+        </View>
       </View>
-    </View>
-    {/* prints map modal to the screen. */}
-    <MapModal visible={showModal} close={setShowModal} userLocation={message.message} title='' sendNo={true}/>
+      {/* prints map modal to the screen. */}
+      <MapModal
+        visible={showModal}
+        close={setShowModal}
+        userLocation={message.message}
+        title=""
+        sendNo={true}
+      />
     </>
   );
 };

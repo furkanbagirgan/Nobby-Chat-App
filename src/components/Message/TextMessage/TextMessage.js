@@ -32,9 +32,19 @@ const TextMessage = ({message}) => {
         <Text style={styles.time}>{date}</Text>
         {sender &&
           (message.seen ? (
-            <Icon name="checkmark-done" color={colors.secondaryBlue} size={15} style={styles.icon} />
+            <Icon
+              name="checkmark-done"
+              color={colors.secondaryBlue}
+              size={15}
+              style={styles.icon}
+            />
           ) : (
-            <Icon name="checkmark-done" color={colors.primaryBackground} size={15} style={styles.icon} />
+            <Icon
+              name="checkmark-done"
+              color={colors.primaryBackground}
+              size={15}
+              style={styles.icon}
+            />
           ))}
       </View>
     </View>

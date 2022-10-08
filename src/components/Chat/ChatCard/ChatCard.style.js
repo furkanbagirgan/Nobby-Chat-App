@@ -18,7 +18,7 @@ const basicStyles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: spaces.padding.large,
-    marginTop: spaces.margin.small
+    marginTop: spaces.margin.small,
   },
   userWrapper: {
     flexDirection: 'row',
@@ -30,7 +30,7 @@ const basicStyles = StyleSheet.create({
     borderRadius: radius.bigSoft,
     backgroundColor: colors.plainText,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   image: {
     width: '100%',
@@ -63,7 +63,7 @@ const basicStyles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: radius.soft,
     backgroundColor: colors.primaryBlue,
-    marginTop: spaces.margin.tiny
+    marginTop: spaces.margin.tiny,
   },
   count: {
     fontSize: sizes.small,

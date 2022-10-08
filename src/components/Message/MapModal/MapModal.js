@@ -15,23 +15,26 @@ function MapModal({visible, close, userLocation, title, sendNo, handlePress}) {
   const theme = useSelector(state => state.theme.theme);
   const [location, setLocation] = useState(new GeoPoint(0, 0));
   const [loading, setLoading] = useState(false);
-  let mapRef=null;
+  let mapRef = null;
 
-  const sendLocation = async()=>{
+  const sendLocation = async () => {
     setLoading(true);
-    let snapUrl='';
-    const snapshot=mapRef.takeSnapshot({
+    let snapUrl = '';
+    const snapshot = mapRef.takeSnapshot({
       width: 100,
       height: 100,
       quality: 1,
     });
-    snapshot.then(async(uri) => {
-      snapUrl=uri;
-      await handlePress(location.latitude===0?userLocation:location,snapUrl);
+    snapshot.then(async uri => {
+      snapUrl = uri;
+      await handlePress(
+        location.latitude === 0 ? userLocation : location,
+        snapUrl,
+      );
       close(false);
       setLoading(false);
     });
-  }
+  };
 
   //Elements that will appear on the screen are defined here
   return (
@@ -53,7 +56,9 @@ function MapModal({visible, close, userLocation, title, sendNo, handlePress}) {
         />
         <Text style={styles[theme].header}>{title}</Text>
         <MapView
-          ref={map => { mapRef = map }}
+          ref={map => {
+            mapRef = map;
+          }}
           style={styles[theme].mapContainer}
           initialRegion={{
             latitude: userLocation.latitude,
@@ -62,14 +67,15 @@ function MapModal({visible, close, userLocation, title, sendNo, handlePress}) {
             longitudeDelta: 0.002,
           }}
           onPress={e => {
-            if(!sendNo){
-            setLocation(
-              new GeoPoint(
-                e.nativeEvent.coordinate.latitude,
-                e.nativeEvent.coordinate.longitude,
-              ),
-            )}}
-          }>
+            if (!sendNo) {
+              setLocation(
+                new GeoPoint(
+                  e.nativeEvent.coordinate.latitude,
+                  e.nativeEvent.coordinate.longitude,
+                ),
+              );
+            }
+          }}>
           <Marker
             coordinate={{
               latitude:
@@ -83,10 +89,16 @@ function MapModal({visible, close, userLocation, title, sendNo, handlePress}) {
             }}
           />
         </MapView>
-        {!sendNo && 
-        <View style={styles[theme].buttonWrapper}><Button title='Send' loading={loading}
-          onClick={sendLocation}
-          theme="blue" /></View>}
+        {!sendNo && (
+          <View style={styles[theme].buttonWrapper}>
+            <Button
+              title="Send"
+              loading={loading}
+              onClick={sendLocation}
+              theme="blue"
+            />
+          </View>
+        )}
       </View>
     </Modal>
   );

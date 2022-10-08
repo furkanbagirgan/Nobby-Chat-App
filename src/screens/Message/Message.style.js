@@ -7,15 +7,15 @@ import spaces from '../../styles/spaces';
 const basicStyles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: spaces.padding.medium
+    paddingTop: spaces.padding.medium,
   },
   emptyList: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   emptyText: {
-    color: colors.plainText
+    color: colors.plainText,
   },
   topContainer: {
     position: 'absolute',
@@ -79,8 +79,8 @@ const styles = {
     },
     inputWrapper: {
       ...basicStyles.inputWrapper,
-      backgroundColor: colors.lightBackground
-    }
+      backgroundColor: colors.lightBackground,
+    },
   }),
   dark: StyleSheet.create({
     ...basicStyles,
@@ -90,8 +90,8 @@ const styles = {
     },
     inputWrapper: {
       ...basicStyles.inputWrapper,
-      backgroundColor: colors.plainBackground
-    }
+      backgroundColor: colors.plainBackground,
+    },
   }),
 };
 

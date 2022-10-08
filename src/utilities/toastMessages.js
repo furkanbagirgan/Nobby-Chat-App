@@ -11,8 +11,8 @@ export const errorMessage = message => {
     hideOnPress: true,
     backgroundColor: colors.secondaryPink,
     textColor: colors.primaryText,
-    containerStyle: {marginTop:20},
-    opacity: 1
+    containerStyle: {marginTop: 20},
+    opacity: 1,
   });
 };
 
@@ -25,7 +25,7 @@ export const successMessage = message => {
     hideOnPress: true,
     backgroundColor: colors.secondaryGreen,
     textColor: colors.primaryText,
-    containerStyle: {marginTop:20},
-    opacity: 1
+    containerStyle: {marginTop: 20},
+    opacity: 1,
   });
 };

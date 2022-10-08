@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Image} from 'react-native';
 import Modal from 'react-native-modal';
 import {updateDoc, doc, Timestamp} from 'firebase/firestore';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import styles from './StoryModal.style';
 import Button from './../../Button';
@@ -12,7 +12,7 @@ import {auth, db} from '../../../utilities/firebase';
 
 function StoryModal({visible, close, storyUrl}) {
   //Necessary states are created.
-  const theme = useSelector(state=>state.theme.theme);
+  const theme = useSelector(state => state.theme.theme);
   const [loading, setLoading] = useState(false);
 
   //Update firestore with new story

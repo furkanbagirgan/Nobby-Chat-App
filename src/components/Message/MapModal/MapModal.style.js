@@ -5,7 +5,7 @@ import sizes from '../../../styles/fontSizes';
 import radius from '../../../styles/radius';
 import spaces from '../../../styles/spaces';
 
-//Here the basic styles of the Contact modal are created.
+//Here the basic styles of the Map modal are created.
 const basicStyles = StyleSheet.create({
   modal: {
     justifyContent: 'flex-end',
@@ -27,7 +27,7 @@ const basicStyles = StyleSheet.create({
   header: {
     fontSize: sizes.medium,
     marginBottom: spaces.margin.big,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   buttonWrapper: {
     position: 'absolute',
@@ -35,11 +35,11 @@ const basicStyles = StyleSheet.create({
     right: 15,
   },
   mapContainer: {
-    flex: 1
-  }
+    flex: 1,
+  },
 });
 
-//Here the changing styles of the Contact modal are created.
+//Here the changing styles of the Map modal are created.
 const styles = {
   light: StyleSheet.create({
     ...basicStyles,

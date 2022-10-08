@@ -6,7 +6,16 @@ import {
   updateEmail,
   updatePassword,
 } from 'firebase/auth';
-import {doc, setDoc, updateDoc, getDoc, arrayUnion, addDoc, Timestamp, collection} from 'firebase/firestore';
+import {
+  doc,
+  setDoc,
+  updateDoc,
+  getDoc,
+  arrayUnion,
+  addDoc,
+  Timestamp,
+  collection,
+} from 'firebase/firestore';
 import {ref, deleteObject, uploadBytes, getDownloadURL} from 'firebase/storage';
 
 import {auth, db, storage} from './firebase';
@@ -198,8 +207,12 @@ export const uploadPhoto = async (image, name) => {
     await uploadBytes(fileRef, blob);
     blob.close();
     return await getDownloadURL(fileRef);
-  } catch {
-    errorMessage('Please check your internet connection!');
+  } catch (error) {
+    errorMessage(
+      'Please check your internet connection!' + error.code
+        ? ' Code:' + error.code
+        : '',
+    );
     return '';
   }
 };
@@ -230,19 +243,19 @@ export const deleteStory = async url => {
 };
 
 //Save new message to firestore
-export const addMessage = async (newMessage,docId) => {
+export const addMessage = async (newMessage, docId) => {
   //Update firestore with new values
   await updateDoc(doc(db, 'message', docId), {
     lastDate: newMessage.date,
     messages: arrayUnion(newMessage),
   });
-}
+};
 
 //Add new message document aka chat to firestore
-export const addNewChat = async (senderId,receiverId, message) => {
-  await addDoc(collection(db, "message"), {
+export const addNewChat = async (senderId, receiverId, message) => {
+  await addDoc(collection(db, 'message'), {
     lastDate: Timestamp.now(),
-    members: [senderId,receiverId],
-    messages: [{...message}]
+    members: [senderId, receiverId],
+    messages: [{...message}],
   });
-}
+};

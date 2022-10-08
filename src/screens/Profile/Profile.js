@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, Image, Text, Alert, ScrollView, TouchableWithoutFeedback} from 'react-native';
+import {
+  View,
+  Image,
+  Text,
+  Alert,
+  ScrollView,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {useForm, Controller} from 'react-hook-form';
 import Icon from '@expo/vector-icons/Ionicons';
@@ -12,7 +19,7 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import {editProfile, logOut} from '../../utilities/firebaseActions';
 import {checkSignup} from '../../utilities/authValidation';
-import {removeItem,setItem} from '../../utilities/asyncStorage';
+import {removeItem, setItem} from '../../utilities/asyncStorage';
 import {setTheme} from '../../redux/themeSlice';
 
 const Profile = () => {

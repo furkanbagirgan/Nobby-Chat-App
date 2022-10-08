@@ -36,12 +36,7 @@ const Signup = () => {
     setLoading(true);
     const res = checkSignup(data.email, data.password, data.repeatPassword);
     if (res === 1) {
-      await createUser(
-        data.email,
-        data.password,
-        data.displayName,
-        dispatch,
-      );
+      await createUser(data.email, data.password, data.displayName, dispatch);
     }
     setLoading(false);
   };

@@ -1,4 +1,4 @@
-import {StyleSheet,StatusBar} from 'react-native';
+import {StyleSheet, StatusBar} from 'react-native';
 
 import colors from '../../styles/colors';
 import radius from '../../styles/radius';
@@ -11,7 +11,7 @@ const basicStyles = StyleSheet.create({
   },
   contentContainer: {
     alignItems: 'center',
-    paddingTop: StatusBar.currentHeight ? StatusBar.currentHeight+20 : 20,
+    paddingTop: StatusBar.currentHeight ? StatusBar.currentHeight + 20 : 20,
     paddingHorizontal: spaces.padding.large,
   },
   buttonWrapper: {
@@ -46,7 +46,7 @@ const basicStyles = StyleSheet.create({
     alignItems: 'center',
     padding: spaces.padding.tiny,
     borderRadius: radius.mediumSoft,
-    backgroundColor: colors.darkBackground
+    backgroundColor: colors.darkBackground,
   },
   iconsContainer: {
     width: '60%',
@@ -61,13 +61,13 @@ const basicStyles = StyleSheet.create({
     alignItems: 'center',
   },
   editIcon: {
-    marginLeft: spaces.margin.medium
+    marginLeft: spaces.margin.medium,
   },
   themeContainer: {
     width: 50,
     height: 110,
     position: 'absolute',
-    top: StatusBar.currentHeight ? StatusBar.currentHeight+10 : 25,
+    top: StatusBar.currentHeight ? StatusBar.currentHeight + 10 : 25,
     right: 15,
     flexDirection: 'column',
     alignItems: 'center',
@@ -78,7 +78,7 @@ const basicStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: radius.mediumSoft,
-  }
+  },
 });
 
 //Here the changing styles of the Profile screen are created.

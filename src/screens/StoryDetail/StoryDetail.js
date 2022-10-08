@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import React, {useState} from 'react';
-import {useSelector,useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import Icon from '@expo/vector-icons/Ionicons';
 
 import styles from './StoryDetail.style';
@@ -57,8 +57,17 @@ const StoryDetail = ({route, navigation}) => {
     <SafeAreaView style={styles[theme].container}>
       {storyURL !== '' ? (
         <>
-          {imageLoading && <View style={styles[theme].imageLoadingWrapper}><ActivityIndicator color={colors.primaryBackground} size={35} /></View>}
-          <Image source={{uri: storyURL}} onLoadStart={()=>setImageLoading(true)} onLoadEnd={()=>setImageLoading(false)} style={styles[theme].image}/>
+          {imageLoading && (
+            <View style={styles[theme].imageLoadingWrapper}>
+              <ActivityIndicator color={colors.primaryBackground} size={35} />
+            </View>
+          )}
+          <Image
+            source={{uri: storyURL}}
+            onLoadStart={() => setImageLoading(true)}
+            onLoadEnd={() => setImageLoading(false)}
+            style={styles[theme].image}
+          />
           {removeStory && (
             <View style={styles[theme].deleteWrapper}>
               <Icon

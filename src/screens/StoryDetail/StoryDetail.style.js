@@ -36,7 +36,7 @@ const basicStyles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   deleteWrapper: {
     position: 'absolute',
@@ -48,7 +48,7 @@ const basicStyles = StyleSheet.create({
     height: 44,
     borderRadius: radius.hugeSoft,
     backgroundColor: colors.primaryPink,
-  }
+  },
 });
 
 //Here the changing styles of the StoryDetail screen are created.

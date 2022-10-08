@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
-import React, {useCallback, useEffect,useState} from 'react';
-import { View } from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {View} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import * as SplashScreen from 'expo-splash-screen';
 
@@ -22,7 +22,12 @@ const Navigation = () => {
       const userData = await getItem('@userData');
       const themeData = await getItem('@themeData');
       if (userData !== 0 || themeData !== 0) {
-        await loginWithUser(userData.email, userData.password, themeData, dispatch);
+        await loginWithUser(
+          userData.email,
+          userData.password,
+          themeData,
+          dispatch,
+        );
       }
       setAppIsReady(true);
     }

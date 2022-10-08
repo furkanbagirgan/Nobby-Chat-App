@@ -54,7 +54,7 @@ const styles = {
       ...basicStyles.title,
       color: colors.primaryText,
     },
-  })
+  }),
 };
 
 export default styles;

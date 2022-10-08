@@ -69,14 +69,12 @@ const Chats = ({chatDetail}) => {
     <View style={styles.container}>
       <FlatList
         fadingEdgeLength={30}
-        contentContainerStyle={
-          chats.length === 0 ? styles.emptyList : {}
-        }
+        contentContainerStyle={chats.length === 0 ? styles.emptyList : {}}
         keyExtractor={keyExtractor}
         data={chats}
         renderItem={renderItem}
         bounces={false}
-        overScrollMode='never'
+        overScrollMode="never"
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={() => (
           <Text style={styles.emptyText}>You have no messages yet</Text>

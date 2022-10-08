@@ -9,16 +9,12 @@ function Input(props) {
   //Here the input component is displayed on the screen.
   return (
     <View style={styles[props.theme].container}>
-      <Icon
-        name={props.iconName}
-        size={20}
-        color={colors.plainText}
-      />
+      <Icon name={props.iconName} size={20} color={colors.plainText} />
       <TextInput
         {...props}
         placeholderTextColor={colors.plainText}
         style={styles[props.theme].input}
-        editable={props.enable? props.enable : true}
+        editable={props.enable ? props.enable : true}
       />
     </View>
   );

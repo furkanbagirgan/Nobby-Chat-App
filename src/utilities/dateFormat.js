@@ -11,7 +11,7 @@ export const formatDate = data => {
       '/' +
       (data.getMonth() + 1) +
       '/' +
-      data.getFullYear().toString().slice(2,4) +
+      data.getFullYear().toString().slice(2, 4) +
       ' ';
   }
   var hours = data.getHours();
