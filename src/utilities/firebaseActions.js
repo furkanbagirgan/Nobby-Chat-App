@@ -209,7 +209,7 @@ export const uploadPhoto = async (image, name) => {
   } catch (error) {
     errorMessage(
       'Please check your internet connection!' + error.code
-        ? ' Code:' + error.code
+        ? ''
         : '',
     );
     return '';

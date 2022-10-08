@@ -135,7 +135,7 @@ const Message = ({route}) => {
     } catch (error) {
       errorMessage(
         'Please open your device location' + error.code
-          ? ' Code:' + error.code
+          ? ''
           : '',
       );
     }

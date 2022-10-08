@@ -7,7 +7,7 @@ export const setItem = async (key, value) => {
     await AsyncStorage.setItem(key, JSON.stringify(value));
   } catch (error) {
     errorMessage(
-      'Could not write to storage!' + error.code ? ' Code:' + error.code : '',
+      'Could not write to storage!' + error.code ? '' : '',
     );
   }
 };
@@ -23,7 +23,7 @@ export const getItem = async key => {
     }
   } catch (error) {
     errorMessage(
-      'Storage could not be read!' + error.code ? ' Code:' + error.code : '',
+      'Storage could not be read!' + error.code ? '' : '',
     );
     return 0;
   }
@@ -35,7 +35,7 @@ export const updateItem = async (key, value) => {
     await AsyncStorage.mergeItem(key, JSON.stringify(value));
   } catch (error) {
     errorMessage(
-      'Could not update storage!' + error.code ? ' Code:' + error.code : '',
+      'Could not update storage!' + error.code ? '' : '',
     );
   }
 };

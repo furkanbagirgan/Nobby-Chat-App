@@ -22,7 +22,7 @@ export const getContacts = createAsyncThunk('contact/getContacts', async () => {
   } catch (error) {
     errorMessage(
       'Please check your internet connection' + error.code
-        ? ' Code:' + error.code
+        ? ''
         : '',
     );
     return [];
