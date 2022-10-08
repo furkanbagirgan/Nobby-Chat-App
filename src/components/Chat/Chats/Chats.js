@@ -24,7 +24,7 @@ const Chats = ({chatDetail}) => {
       orderBy('lastDate', 'desc'),
     );
     const unsubscribe = onSnapshot(q, snapshot => {
-      const userChats = [];
+      let userChats = [];
       snapshot.forEach(doc => {
         userChats.push({...doc.data(), id: doc.id});
       });
@@ -50,7 +50,7 @@ const Chats = ({chatDetail}) => {
     members.splice(index, 1);
     let messageCount = 0;
     item.messages.forEach(message => {
-      if (!message.seen) {
+      if (message.receiverId === auth.currentUser.uid && !message.seen) {
         messageCount++;
       }
     });
@@ -68,14 +68,19 @@ const Chats = ({chatDetail}) => {
   return (
     <View style={styles.container}>
       <FlatList
-        contentContainerStyle={chats.length === 0 ? styles.emptyList : {}}
+        fadingEdgeLength={30}
+        contentContainerStyle={
+          chats.length === 0 ? styles.emptyList : {}
+        }
         keyExtractor={keyExtractor}
         data={chats}
         renderItem={renderItem}
-        overScrollMode="never"
         bounces={false}
+        overScrollMode='never'
         showsVerticalScrollIndicator={false}
-        ListEmptyComponent={()=><Text style={styles.emptyText}>You have no messages yet</Text>}
+        ListEmptyComponent={() => (
+          <Text style={styles.emptyText}>You have no messages yet</Text>
+        )}
       />
     </View>
   );
