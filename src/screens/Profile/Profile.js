@@ -46,7 +46,7 @@ const Profile = () => {
     },
   });
 
-  //
+  //Change input editable with icon
   const editValue = inputName => {
     let iconName = '';
     if (editInput[inputName].icon === 'pencil') {
